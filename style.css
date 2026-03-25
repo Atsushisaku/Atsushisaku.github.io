@@ -2,9 +2,30 @@ img {
     width: 300px;
 }
 
+.profile-section {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-photo {
+    flex: 1;
+}
+
+.profile-photo img {
+    width: 200px;
+    height: auto;
+    border-radius: 6px;
+}
+
 .career-list {
     list-style: none;
     padding: 0;
+    padding-left: 15px;
 }
 
 .career-list li {
@@ -29,4 +50,9 @@ ul ul {
 
 ul ul li {
     margin-bottom: 4px;
+}
+
+.indented {
+  margin-left: 20px;
+  margin: 0.4em 0 0.4em 20px;
 }
