@@ -1,0 +1,204 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile, accounts } from '../data/profile';
+import { career, skills, interests } from '../data/career';
+
+const timeline = [...career].reverse();
+---
+
+<Base title="About" description={`${profile.nameJa}の経歴とプロフィール`}>
+  <h1>About</h1>
+
+  <dl class="facts">
+    <dt>名前</dt>
+    <dd>{profile.nameJa}（{profile.nameEn}）</dd>
+    <dt>職業</dt>
+    <dd>{profile.role}</dd>
+    <dt>出身</dt>
+    <dd>{profile.hometown}</dd>
+  </dl>
+
+  <blockquote class="motto">
+    {profile.motto.lines.map((l) => <p>{l}</p>)}
+    <cite>— {profile.motto.author}</cite>
+  </blockquote>
+
+  <h2>経歴</h2>
+  <ol class="timeline">
+    {
+      timeline.map((c) => (
+        <li>
+          <span class="date">
+            {c.start} – {c.end ?? '現在'}
+          </span>
+          <span class="title">{c.title}</span>
+          {c.detail && <p class="muted detail">{c.detail}</p>}
+        </li>
+      ))
+    }
+  </ol>
+
+  {
+    skills.some((s) => s.items.length > 0) && (
+      <>
+        <h2>スキル</h2>
+        <dl class="facts">
+          {skills
+            .filter((s) => s.items.length > 0)
+            .map((s) => (
+              <>
+                <dt>{s.group}</dt>
+                <dd>
+                  <ul class="tags">{s.items.map((i) => <li>{i}</li>)}</ul>
+                </dd>
+              </>
+            ))}
+        </dl>
+      </>
+    )
+  }
+
+  <h2>趣味・関心</h2>
+  <div class="interests">
+    {
+      interests.map((it) => (
+        <section>
+          <h3>{it.title}</h3>
+          <ul>{it.notes.map((n) => <li>{n}</li>)}</ul>
+          {it.link && <a href={it.link.href}>{it.link.label} →</a>}
+        </section>
+      ))
+    }
+  </div>
+
+  <h2>アカウント</h2>
+  <ul class="accounts">
+    {accounts.map((a) => <li><a href={a.href} target="_blank" rel="noopener noreferrer">{a.label}</a></li>)}
+  </ul>
+</Base>
+
+<style>
+  h1 {
+    font-size: 1.8rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 0.5rem 1rem;
+    margin: 0;
+  }
+
+  .facts dt {
+    color: var(--muted);
+  }
+
+  .facts dd {
+    margin: 0;
+  }
+
+  .motto {
+    margin: 1.75rem 0 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-style: italic;
+  }
+
+  .motto p {
+    margin: 0;
+  }
+
+  .motto cite {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 2px solid var(--line);
+  }
+
+  .timeline li {
+    position: relative;
+    padding: 0 0 1.25rem 1.25rem;
+  }
+
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0.55em;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+
+  .timeline li:first-child::before {
+    background: var(--accent);
+  }
+
+  .date {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .title {
+    font-weight: 600;
+  }
+
+  .detail {
+    margin: 0.2rem 0 0;
+    font-size: 0.92rem;
+  }
+
+  .interests {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 1rem;
+  }
+
+  .interests section {
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .interests ul {
+    margin: 0.5rem 0;
+    padding-left: 1.2rem;
+    font-size: 0.93rem;
+  }
+
+  .interests a {
+    font-size: 0.92rem;
+  }
+
+  .accounts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .accounts a {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    text-decoration: none;
+  }
+</style>

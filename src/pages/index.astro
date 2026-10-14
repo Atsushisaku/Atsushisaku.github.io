@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { profile } from '../data/profile';
+import { career } from '../data/career';
+import { works } from '../data/works';
+
+const featured = works.filter((w) => w.featured);
+const now = career.at(-1);
+---
+
+<Base>
+  <section class="hero">
+    <img class="photo" src={profile.photo} alt={`${profile.nameJa}の写真`} width="160" height="160" />
+    <div>
+      <p class="eyebrow">{profile.role}</p>
+      <h1>
+        {profile.nameJa}
+        <span class="en">{profile.nameEn}</span>
+      </h1>
+      <p class="tagline">{profile.tagline}</p>
+      {now && <p class="muted now">現在: {now.title}</p>}
+      <p class="cta">
+        <a href="/about/">経歴・プロフィール →</a>
+        <a href="/works/">開発物 →</a>
+      </p>
+    </div>
+  </section>
+
+  <h2>主な開発物</h2>
+  <div class="grid">
+    {featured.map((w) => <WorkCard work={w} />)}
+  </div>
+  <p><a href="/works/">すべての開発物を見る →</a></p>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 1rem 0 1.5rem;
+  }
+
+  .photo {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    margin: 0;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+  }
+
+  h1 {
+    margin: 0.2rem 0 0.6rem;
+    font-size: 2rem;
+  }
+
+  .en {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .tagline {
+    margin: 0;
+  }
+
+  .now {
+    margin: 0.4rem 0 0;
+    font-size: 0.9rem;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin: 1rem 0 0;
+    font-weight: 600;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 1rem;
+  }
+
+  @media (max-width: 560px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      text-align: center;
+      justify-items: center;
+    }
+
+    .photo {
+      width: 128px;
+      height: 128px;
+    }
+
+    .cta {
+      justify-content: center;
+    }
+  }
+</style>

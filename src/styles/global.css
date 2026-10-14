@@ -1,0 +1,105 @@
+:root {
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --text: #1c1c1e;
+  --muted: #6b6b70;
+  --line: #e6e3dc;
+  --accent: #b4451f;
+  --accent-soft: #f6e7e0;
+  --max: 46rem;
+  --radius: 10px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141416;
+    --surface: #1c1c1f;
+    --text: #ececee;
+    --muted: #9a9aa2;
+    --line: #2d2d32;
+    --accent: #ec8a64;
+    --accent-soft: #3a2620;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  font-feature-settings: 'palt';
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin: 3rem 0 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+h3 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.tags li {
+  font-size: 0.78rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--text);
+}

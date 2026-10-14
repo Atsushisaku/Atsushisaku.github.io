@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import { meets, best, total, type Attempt } from '../data/powerlifting';
+
+const lifts = [
+  { key: 'squat', label: 'SQ' },
+  { key: 'bench', label: 'BP' },
+  { key: 'deadlift', label: 'DL' },
+] as const;
+
+const fmt = (n: number) => String(n);
+const ordered = [...meets].reverse();
+const bestTotal = Math.max(...meets.map(total));
+---
+
+<Base title="パワーリフティング" description="パワーリフティングの大会成績">
+  <p><a href="/about/">← About</a></p>
+  <h1>パワーリフティング 大会成績</h1>
+  <p class="muted lead">ベストトータル {fmt(bestTotal)}kg。取り消し線は失敗した試技です。</p>
+
+  <div class="meets">
+    {
+      ordered.map((m) => (
+        <article class="meet">
+          <header>
+            <p class="meta muted">
+              {m.fiscalYear}年度 · {m.weightClass} · 体重 {fmt(m.bodyweight)}kg
+            </p>
+            <h3>{m.name}</h3>
+            <p class="result">
+              <strong>{m.place}</strong>
+              {m.awards?.map((a) => <strong>{a}</strong>)}
+              <span class="total">Total {fmt(total(m))}kg</span>
+            </p>
+          </header>
+          <table>
+            <tbody>
+              {lifts.map(({ key, label }) => (
+                <tr>
+                  <th scope="row">{label}</th>
+                  {(m[key] as Attempt[]).map(([w, good]) => (
+                    <td class={good ? 'good' : 'miss'}>{good ? fmt(w) : <s>{fmt(w)}</s>}</td>
+                  ))}
+                  <td class="best">{fmt(best(m[key]))}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </article>
+      ))
+    }
+  </div>
+
+  <p>
+    <a href="https://powerlifting-ibaraki.jp/" target="_blank" rel="noopener noreferrer">茨城県パワーリフティング協会</a>
+  </p>
+</Base>
+
+<style>
+  h1 {
+    font-size: 1.6rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .lead {
+    margin: 0 0 1.5rem;
+  }
+
+  .meets {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .meet {
+    padding: 1.1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .meta {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  .result {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: baseline;
+    margin: 0.3rem 0 0.75rem;
+  }
+
+  .result strong {
+    color: var(--accent);
+  }
+
+  .total {
+    margin-left: auto;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.95rem;
+  }
+
+  th,
+  td {
+    padding: 0.3rem 0.5rem;
+    border-top: 1px solid var(--line);
+    text-align: right;
+  }
+
+  th {
+    text-align: left;
+    color: var(--muted);
+    font-weight: 600;
+    width: 3rem;
+  }
+
+  .miss {
+    color: var(--muted);
+  }
+
+  .best {
+    font-weight: 700;
+  }
+</style>

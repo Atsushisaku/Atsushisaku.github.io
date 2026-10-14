@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { works } from '../data/works';
+---
+
+<Base title="Works" description="公開している開発物の一覧">
+  <h1>Works</h1>
+  <p class="muted lead">公開している開発物です。ソースコードは GitHub で見られます。</p>
+  <div class="grid">
+    {works.map((w) => <WorkCard work={w} />)}
+  </div>
+</Base>
+
+<style>
+  h1 {
+    font-size: 1.8rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .lead {
+    margin: 0 0 1.5rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 1rem;
+  }
+</style>
