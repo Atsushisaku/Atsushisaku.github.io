@@ -4,9 +4,9 @@ import PageHeader from '../components/PageHeader.astro';
 import { meets, best, total, type Attempt } from '../data/powerlifting';
 
 const lifts = [
-  { key: 'squat', label: 'Squat' },
-  { key: 'bench', label: 'Bench' },
-  { key: 'deadlift', label: 'Deadlift' },
+  { key: 'squat', label: 'スクワット' },
+  { key: 'bench', label: 'ベンチプレス' },
+  { key: 'deadlift', label: 'デッドリフト' },
 ] as const;
 
 const fmt = (n: number) => String(n);
@@ -15,19 +15,20 @@ const bestTotal = Math.max(...meets.map(total));
 const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m) => best(m[key])));
 ---
 
-<Base title="Powerlifting" description="パワーリフティングの大会成績">
+<Base title="パワーリフティング" description="パワーリフティングの大会成績">
   <div class="container">
-    <PageHeader kicker="Powerlifting" title="大会成績" lead="取り消し線は失敗した試技です。">
-      <div class="prs">
-        <div class="pr total">
-          <span class="mono">Best Total</span>
-          <strong>{fmt(bestTotal)}<small>kg</small></strong>
+    <PageHeader eyebrow="Powerlifting" title="大会成績" lead="取り消し線は失敗した試技です。">
+      <!-- stat-panel -->
+      <div class="stats">
+        <div class="stat-panel">
+          <span class="t-caption">ベストトータル</span>
+          <strong class="t-heading-lg accent">{fmt(bestTotal)}<small>kg</small></strong>
         </div>
         {
           lifts.map(({ key, label }) => (
-            <div class="pr">
-              <span class="mono">{label}</span>
-              <strong>
+            <div class="stat-panel">
+              <span class="t-caption">{label}</span>
+              <strong class="t-heading-lg">
                 {fmt(bestOf(key))}
                 <small>kg</small>
               </strong>
@@ -41,26 +42,27 @@ const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m)
       {
         ordered.map((m) => (
           <article class="meet">
-            <header>
-              <p class="mono meta">
-                FY{m.fiscalYear} · {m.weightClass} · BW {fmt(m.bodyweight)}kg
-              </p>
-              <h2>{m.name}</h2>
-              <p class="result">
-                <span class="badge">{m.place}</span>
-                {m.awards?.map((a) => <span class="badge">{a}</span>)}
-                <span class="mono sum">
-                  Total <strong>{fmt(total(m))}</strong>kg
-                </span>
-              </p>
-            </header>
-            <table>
+            <p class="t-body-sm muted meta">
+              {m.fiscalYear}年度 · {m.weightClass} · 体重 {fmt(m.bodyweight)}kg
+            </p>
+            <h2 class="t-subtitle-lg">{m.name}</h2>
+            <div class="result">
+              <span class="badge-accent">{m.place}</span>
+              {m.awards?.map((a) => <span class="badge-accent">{a}</span>)}
+              <span class="sum">
+                <span class="t-body-sm muted">トータル</span>
+                <strong class="t-heading-sm">{fmt(total(m))}</strong>
+                <span class="t-body-sm muted">kg</span>
+              </span>
+            </div>
+            <!-- spec-table -->
+            <table class="spec-table t-body-sm">
               <tbody>
                 {lifts.map(({ key, label }) => (
                   <tr>
-                    <th scope="row" class="mono">{label}</th>
+                    <th scope="row">{label}</th>
                     {(m[key] as Attempt[]).map(([w, good]) => (
-                      <td class={good ? 'good' : 'miss'}>{good ? fmt(w) : <s>{fmt(w)}</s>}</td>
+                      <td class={good ? undefined : 'miss'}>{good ? fmt(w) : <s>{fmt(w)}</s>}</td>
                     ))}
                     <td class="best">{fmt(best(m[key]))}</td>
                   </tr>
@@ -73,132 +75,112 @@ const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m)
     </div>
 
     <p class="assoc">
-      <a class="arrow-link" href="https://powerlifting-ibaraki.jp/" target="_blank" rel="noopener noreferrer">茨城県パワーリフティング協会</a>
+      <a class="link arrow" href="https://powerlifting-ibaraki.jp/" target="_blank" rel="noopener noreferrer">茨城県パワーリフティング協会</a>
     </p>
   </div>
 </Base>
 
 <style>
-  .prs {
+  .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    margin-top: 2.5rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--line);
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-xxl);
   }
 
-  .pr {
+  .stat-panel {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
-    padding: 1.1rem 1.25rem;
-    background: var(--bg-elev);
+    gap: var(--spacing-xxs);
+    padding: var(--spacing-xl);
+    border-radius: var(--rounded-xxl);
+    background: var(--surface);
   }
 
-  .pr .mono {
+  .stat-panel span {
     color: var(--muted);
-    font-size: 0.7rem;
-    text-transform: uppercase;
+    font-weight: 700;
   }
 
-  .pr strong {
-    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
+  .stat-panel strong {
+    color: var(--heading);
     font-variant-numeric: tabular-nums;
   }
 
-  .pr small {
-    font-size: 0.5em;
-    margin-left: 0.15rem;
-    color: var(--muted);
-    font-weight: 600;
+  .stat-panel .accent {
+    color: var(--accent);
   }
 
-  .pr.total strong {
-    background: linear-gradient(100deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .stat-panel small {
+    margin-left: 2px;
+    font-size: 0.5em;
+    color: var(--muted);
   }
 
   .meets {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 30rem), 1fr));
-    gap: 1.25rem;
+    gap: var(--spacing-xl);
   }
 
   .meet {
-    padding: 1.4rem 1.5rem;
-    background: var(--bg-elev);
+    padding: var(--spacing-xxl);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border-radius: var(--rounded-xxxl);
   }
 
   .meta {
     margin: 0;
-    color: var(--muted);
-  }
-
-  h2 {
-    margin-top: 0.3rem;
-    font-size: 1.05rem;
-    font-weight: 650;
-    letter-spacing: -0.01em;
   }
 
   .result {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
-    margin: 0.75rem 0 1rem;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-md) 0 var(--spacing-lg);
   }
 
-  .badge {
-    padding: 0.1rem 0.65rem;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
+  /* badge-accent */
+  .badge-accent {
+    padding: var(--spacing-xxs) 10px;
+    border-radius: var(--rounded-full);
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
   }
 
   .sum {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--spacing-xxs);
     margin-left: auto;
-    color: var(--muted);
   }
 
   .sum strong {
-    font-family: var(--font);
-    font-size: 1.3rem;
-    color: var(--text);
-    margin: 0 0.15rem;
+    color: var(--heading);
+    font-variant-numeric: tabular-nums;
   }
 
-  table {
+  .spec-table {
     width: 100%;
     border-collapse: collapse;
     font-variant-numeric: tabular-nums;
-    font-size: 0.95rem;
   }
 
-  th,
-  td {
-    padding: 0.45rem 0.4rem;
+  .spec-table th,
+  .spec-table td {
+    padding: var(--spacing-xs) var(--spacing-xxs);
     border-top: 1px solid var(--line);
     text-align: right;
   }
 
-  th {
+  .spec-table th {
     text-align: left;
-    color: var(--muted);
-    font-weight: 500;
-    font-size: 0.72rem;
-    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text);
   }
 
   .miss {
@@ -206,17 +188,21 @@ const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m)
   }
 
   .best {
-    font-weight: 750;
-    color: var(--accent);
+    font-weight: 700;
+    color: var(--heading);
   }
 
   .assoc {
-    margin-top: 2rem;
+    margin-top: var(--spacing-xxl);
   }
 
-  @media (max-width: 560px) {
-    .prs {
+  @media (max-width: 767px) {
+    .stats {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    .meet {
+      padding: var(--spacing-xl);
     }
   }
 </style>

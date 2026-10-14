@@ -4,242 +4,145 @@ import type { Work } from '../data/works';
 
 interface Props {
   work: Work;
-  index: number;
-  // 横長の大きなカード（トップの先頭用）
-  hero?: boolean;
-  // 箇条書きまで出す詳細表示（Works ページ用）
+  // card-work-feature: 画像と説明を左右に並べる大きなカード
+  feature?: boolean;
+  // 箇条書きまで出す（Works ページ用）
   detailed?: boolean;
 }
 
-const { work, index, hero = false, detailed = false } = Astro.props;
+const { work, feature = false, detailed = false } = Astro.props;
 const href = work.demo ?? work.repo;
-const no = String(index + 1).padStart(2, '0');
 ---
 
-<article class:list={['card', { hero }]}>
-  <a class="thumb" href={href} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+<article class:list={[feature ? 'card-work-feature' : 'card-work']}>
+  <a class="media" href={href} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
     {
       work.image ? (
         <Image
           src={work.image}
           alt=""
           widths={[480, 800, 1200]}
-          sizes={hero ? '(min-width: 900px) 640px, 100vw' : '(min-width: 900px) 380px, 100vw'}
-          loading={hero ? 'eager' : 'lazy'}
+          sizes={feature ? '(min-width: 1024px) 680px, 100vw' : '(min-width: 1024px) 560px, 100vw'}
+          loading={feature ? 'eager' : 'lazy'}
         />
       ) : (
-        <div class="cover">
-          <span class="mono">{work.tech.join(' · ')}</span>
-          <strong>{work.name}</strong>
-        </div>
+        <span class="cover t-heading-lg">{work.name}</span>
       )
     }
   </a>
 
   <div class="body">
-    <p class="mono meta">
-      <span class="no">{no}</span>
-      {work.demo ? 'Live' : 'Source'}
-      {work.note && <span class="note">· {work.note}</span>}
-    </p>
-    <h3>
+    {work.tagline && <p class="eyebrow">{work.tagline}</p>}
+    <h3 class:list={[feature ? 't-heading-lg' : 't-heading-sm']}>
       <a href={href} target="_blank" rel="noopener noreferrer">{work.name}</a>
     </h3>
-    {work.tagline && <p class="tagline">{work.tagline}</p>}
     <p class="summary">{work.summary}</p>
-    {(hero || detailed) && work.points && <ul class="points">{work.points.map((p) => <li>{p}</li>)}</ul>}
-    <ul class="stack">{work.tech.map((t) => <li>{t}</li>)}</ul>
+    {(feature || detailed) && work.points && <ul class="bullets t-body-sm">{work.points.map((p) => <li>{p}</li>)}</ul>}
+    <ul class="chips">{work.tech.map((t) => <li>{t}</li>)}</ul>
     <div class="actions">
-      {work.demo && <a class="arrow-link" href={work.demo} target="_blank" rel="noopener noreferrer">Visit</a>}
-      {work.repo && <a class="arrow-link sub" href={work.repo} target="_blank" rel="noopener noreferrer">GitHub</a>}
+      {work.demo && <a class="btn btn-primary" href={work.demo} target="_blank" rel="noopener noreferrer">サイトを開く</a>}
+      {work.repo && <a class="btn btn-ghost" href={work.repo} target="_blank" rel="noopener noreferrer">GitHub</a>}
+      {work.note && <span class="t-caption muted">{work.note}</span>}
     </div>
   </div>
 </article>
 
 <style>
-  .card {
-    position: relative;
+  .card-work,
+  .card-work-feature {
     display: flex;
     flex-direction: column;
-    background: var(--bg-elev);
+    gap: var(--spacing-xl);
+    border-radius: var(--rounded-xxxl);
+    transition: transform 0.2s ease-out;
+  }
+
+  .card-work {
+    padding: var(--spacing-xxl);
+    background: var(--bg);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition:
-      transform 0.3s ease,
-      border-color 0.3s ease;
   }
 
-  .card:hover {
-    transform: translateY(-4px);
-    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  .card-work:hover {
+    transform: translateY(-2px);
+    border-color: var(--line-strong);
   }
 
-  .thumb {
+  .card-work-feature {
+    padding: var(--spacing-xxxl);
+    background: var(--surface);
+  }
+
+  /* card-work-media */
+  .media {
     display: block;
     aspect-ratio: 16 / 10;
     overflow: hidden;
-    border-bottom: 1px solid var(--line);
-    background: var(--bg);
+    border-radius: var(--rounded-xxl);
+    background: var(--surface);
+    border: 1px solid var(--line);
   }
 
-  .thumb :global(img) {
+  .media :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: top center;
-    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 
-  .card:hover .thumb :global(img) {
-    transform: scale(1.04);
-  }
-
-  /* スクリーンショットが無い作品の表紙 */
   .cover {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.4rem;
+    display: grid;
+    place-items: center;
     height: 100%;
-    padding: 1.5rem;
-    color: #fff;
-    background:
-      radial-gradient(80% 90% at 100% 0%, rgba(56, 209, 240, 0.55), transparent 60%),
-      radial-gradient(70% 80% at 0% 100%, rgba(37, 99, 235, 0.9), transparent 70%),
-      #0a1630;
+    color: var(--heading);
   }
 
-  .cover::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 28px 28px,
-      linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 28px 28px;
-  }
-
-  .cover strong {
-    position: relative;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    letter-spacing: -0.03em;
-  }
-
-  .cover .mono {
-    position: relative;
-    opacity: 0.8;
+  .card-work-feature .cover {
+    background: var(--bg);
   }
 
   .body {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: var(--spacing-md);
     flex: 1;
-    padding: 1.4rem 1.5rem 1.5rem;
   }
 
-  .meta {
+  .body .eyebrow {
     margin: 0;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .no {
-    color: var(--accent);
-    margin-right: 0.6rem;
-  }
-
-  .note {
-    font-family: var(--font);
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  h3 {
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-  }
-
-  .tagline {
-    margin: -0.2rem 0 0;
-    font-weight: 600;
-    font-size: 0.92rem;
   }
 
   .summary {
     margin: 0;
-    color: var(--muted);
-    font-size: 0.93rem;
-  }
-
-  .points {
-    margin: 0.1rem 0 0.2rem;
-    padding: 0;
-    list-style: none;
-    font-size: 0.88rem;
-    color: var(--muted);
-  }
-
-  .points li {
-    position: relative;
-    padding-left: 1.1rem;
-    margin-top: 0.3rem;
-  }
-
-  .points li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.72em;
-    width: 0.45rem;
-    height: 1px;
-    background: var(--accent);
+    color: var(--sub);
   }
 
   .actions {
     display: flex;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-md);
     margin-top: auto;
-    padding-top: 0.6rem;
-    font-size: 0.9rem;
+    padding-top: var(--spacing-xs);
   }
 
-  .sub {
-    color: var(--muted);
-  }
-
-  .sub:hover {
-    color: var(--text);
-  }
-
-  /* 横長カード */
-  @media (min-width: 900px) {
-    .hero {
+  @media (min-width: 1024px) {
+    .card-work-feature {
       display: grid;
-      grid-template-columns: 1.35fr 1fr;
+      grid-template-columns: 1.25fr 1fr;
+      align-items: center;
+      gap: var(--spacing-xxxl);
     }
 
-    .hero .thumb {
-      aspect-ratio: auto;
-      min-height: 100%;
-      border-bottom: 0;
-      border-right: 1px solid var(--line);
+    .card-work-feature .media {
+      aspect-ratio: 4 / 3;
     }
+  }
 
-    .hero .body {
-      padding: 2.25rem;
-      justify-content: center;
-    }
-
-    .hero h3 {
-      font-size: 2rem;
-    }
-
-    .hero .tagline {
-      font-size: 1.05rem;
+  @media (max-width: 767px) {
+    .card-work,
+    .card-work-feature {
+      padding: var(--spacing-xl);
     }
   }
 </style>

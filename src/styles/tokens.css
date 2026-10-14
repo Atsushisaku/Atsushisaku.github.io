@@ -1,0 +1,49 @@
+/* DESIGN.md から自動生成。直接編集せず、DESIGN.md を直して `npm run design:tokens` を実行する */
+:root {
+  --color-primary: #0064e0;
+  --color-primary-deep: #0457cb;
+  --color-on-primary: #ffffff;
+  --color-ink-button: #0a1317;
+  --color-on-ink-button: #ffffff;
+  --color-canvas: #ffffff;
+  --color-surface-soft: #f1f4f7;
+  --color-ink-deep: #0a1317;
+  --color-ink: #1c1e21;
+  --color-charcoal: #444950;
+  --color-steel: #5d6c7b;
+  --color-stone: #8595a4;
+  --color-hairline: #ced0d4;
+  --color-hairline-soft: #dee3e9;
+  --color-primary-dark: #4d9bff;
+  --color-ink-button-dark: #f1f4f7;
+  --color-on-ink-button-dark: #0a1317;
+  --color-canvas-dark: #0a1317;
+  --color-surface-soft-dark: #141d23;
+  --color-ink-deep-dark: #f1f4f7;
+  --color-ink-dark: #dfe5eb;
+  --color-steel-dark: #9aa8b6;
+  --color-hairline-dark: #33414b;
+  --color-hairline-soft-dark: #222d34;
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+  --spacing-xxxl: 40px;
+  --spacing-section-sm: 48px;
+  --spacing-section: 64px;
+  --spacing-section-lg: 80px;
+  --spacing-hero: 120px;
+  --spacing-gutter: 16px;
+  --spacing-container: 1200px;
+  --rounded-sm: 4px;
+  --rounded-lg: 8px;
+  --rounded-xl: 16px;
+  --rounded-xxl: 24px;
+  --rounded-xxxl: 32px;
+  --rounded-full: 100px;
+  --rounded-circle: 9999px;
+}
+

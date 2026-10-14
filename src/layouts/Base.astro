@@ -1,7 +1,6 @@
 ---
 import '@fontsource-variable/inter';
 import '@fontsource-variable/noto-sans-jp';
-import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import { profile, accounts } from '../data/profile';
 
@@ -29,8 +28,8 @@ const current = Astro.url.pathname;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#070b14" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f5f7fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a1317" media="(prefers-color-scheme: dark)" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -38,12 +37,10 @@ const current = Astro.url.pathname;
     <meta property="og:image" content={new URL(profile.photo.src, Astro.site)} />
   </head>
   <body>
-    <header class="site-header">
+    <!-- nav-bar -->
+    <header class="nav-bar">
       <div class="container bar">
-        <a class="brand" href="/" aria-label="ホーム">
-          <span class="mark">AS</span>
-          <span class="brand-name">{profile.nameEn}</span>
-        </a>
+        <a class="brand" href="/">{profile.nameEn}</a>
         <nav aria-label="メイン">
           {
             nav.map((item) => (
@@ -52,7 +49,7 @@ const current = Astro.url.pathname;
               </a>
             ))
           }
-          <a class="gh" href="https://github.com/Atsushisaku" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a href="https://github.com/Atsushisaku" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </nav>
       </div>
     </header>
@@ -61,10 +58,11 @@ const current = Astro.url.pathname;
       <slot />
     </main>
 
-    <footer class="site-footer">
-      <div class="container foot">
-        <span class="mono">© {new Date().getFullYear()} {profile.nameEn}</span>
-        <span class="links mono">
+    <!-- footer-region -->
+    <footer class="footer-region">
+      <div class="container foot t-body-sm">
+        <span>© {new Date().getFullYear()} {profile.nameEn}</span>
+        <span class="links">
           {accounts.map((a) => <a href={a.href} rel="noopener noreferrer" target="_blank">{a.label}</a>)}
         </span>
       </div>
@@ -73,12 +71,11 @@ const current = Astro.url.pathname;
 </html>
 
 <style>
-  .site-header {
+  .nav-bar {
     position: sticky;
     top: 0;
     z-index: 20;
-    backdrop-filter: saturate(160%) blur(14px);
-    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    background: var(--bg);
     border-bottom: 1px solid var(--line);
   }
 
@@ -86,64 +83,59 @@ const current = Astro.url.pathname;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    height: 4rem;
+    gap: var(--spacing-base);
+    height: 64px;
   }
 
   .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.65rem;
-    font-weight: 650;
-    letter-spacing: -0.01em;
-  }
-
-  .mark {
-    display: grid;
-    place-items: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 9px;
-    font-family: var(--mono);
-    font-size: 0.72rem;
+    white-space: nowrap;
+    color: var(--heading);
+    font-size: 18px;
     font-weight: 700;
-    color: #fff;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    letter-spacing: -0.01em;
   }
 
   nav {
     display: flex;
     align-items: center;
-    gap: clamp(0.9rem, 3vw, 2rem);
-    font-size: 0.9rem;
+    gap: var(--spacing-xxs);
   }
 
   nav a {
-    color: var(--muted);
-    transition: color 0.2s ease;
-  }
-
-  nav a:hover,
-  nav a[aria-current='page'] {
+    white-space: nowrap;
+    padding: var(--spacing-xs) var(--spacing-base);
+    border-radius: var(--rounded-full);
     color: var(--text);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.43;
   }
 
-  .gh {
-    padding: 0.35rem 0.8rem;
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
+  nav a:hover {
+    background: var(--surface);
+  }
+
+  /* nav-pill-active */
+  nav a[aria-current='page'] {
+    background: var(--heading);
+    color: var(--bg);
   }
 
   @media (max-width: 480px) {
-    .brand-name {
-      display: none;
+    .brand {
+      font-size: 16px;
+    }
+
+    nav a {
+      padding: var(--spacing-xs) 10px;
+      font-size: 13px;
     }
   }
 
-  .site-footer {
-    margin-top: clamp(5rem, 10vw, 8rem);
+  .footer-region {
+    margin-top: var(--spacing-hero);
+    padding: var(--spacing-xxl) 0 var(--spacing-section-sm);
     border-top: 1px solid var(--line);
-    padding: 1.5rem 0 2rem;
     color: var(--muted);
   }
 
@@ -151,16 +143,16 @@ const current = Astro.url.pathname;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 1rem;
+    gap: var(--spacing-base);
   }
 
   .links {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.25rem;
+    gap: var(--spacing-lg);
   }
 
   .links a:hover {
-    color: var(--text);
+    color: var(--heading);
   }
 </style>

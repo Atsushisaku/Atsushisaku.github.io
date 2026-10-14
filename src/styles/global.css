@@ -1,40 +1,44 @@
-:root {
-  --bg: #f5f7fb;
-  --bg-elev: #ffffff;
-  --text: #0b1324;
-  --muted: #5a667a;
-  --faint: #8a95a8;
-  --line: rgba(15, 30, 60, 0.1);
-  --line-strong: rgba(15, 30, 60, 0.18);
-  --accent: #2563eb;
-  --accent-2: #0891b2;
-  --accent-ink: #ffffff;
-  --glow: rgba(37, 99, 235, 0.16);
-  --grid: rgba(15, 30, 60, 0.05);
-  --shadow: 0 1px 2px rgba(15, 30, 60, 0.04), 0 12px 32px -12px rgba(15, 30, 60, 0.18);
+/*
+ * 色・角丸・余白の値は DESIGN.md が正。tokens.css（自動生成）の変数を使い、ここでは
+ * 「どの場面にどのトークンを使うか」の対応と、文字組みのクラスだけを定義する。
+ */
+@import './tokens.css';
 
-  --max: 72rem;
-  --radius: 16px;
+:root {
+  --bg: var(--color-canvas);
+  --surface: var(--color-surface-soft);
+  --heading: var(--color-ink-deep);
+  --text: var(--color-ink);
+  --sub: var(--color-charcoal);
+  --muted: var(--color-steel);
+  --faint: var(--color-stone);
+  --line: var(--color-hairline-soft);
+  --line-strong: var(--color-hairline);
+  --accent: var(--color-primary);
+  --accent-pressed: var(--color-primary-deep);
+  --btn-bg: var(--color-ink-button);
+  --btn-fg: var(--color-on-ink-button);
+
   --font: 'Inter Variable', 'Noto Sans JP Variable', system-ui, sans-serif;
-  --mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --max: var(--spacing-container);
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #070b14;
-    --bg-elev: #0d1424;
-    --text: #e8eef8;
-    --muted: #93a0b6;
-    --faint: #64708a;
-    --line: rgba(148, 170, 210, 0.12);
-    --line-strong: rgba(148, 170, 210, 0.24);
-    --accent: #5b9dff;
-    --accent-2: #38d1f0;
-    --accent-ink: #061024;
-    --glow: rgba(70, 130, 255, 0.22);
-    --grid: rgba(148, 170, 210, 0.05);
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+    --bg: var(--color-canvas-dark);
+    --surface: var(--color-surface-soft-dark);
+    --heading: var(--color-ink-deep-dark);
+    --text: var(--color-ink-dark);
+    --sub: var(--color-ink-dark);
+    --muted: var(--color-steel-dark);
+    --faint: var(--color-steel-dark);
+    --line: var(--color-hairline-soft-dark);
+    --line-strong: var(--color-hairline-dark);
+    --accent: var(--color-primary-dark);
+    --accent-pressed: var(--color-primary-dark);
+    --btn-bg: var(--color-ink-button-dark);
+    --btn-fg: var(--color-on-ink-button-dark);
     color-scheme: dark;
   }
 }
@@ -50,33 +54,17 @@ html {
   scroll-behavior: smooth;
 }
 
+/* body-md */
 body {
-  position: relative;
   margin: 0;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
   font-size: 16px;
-  line-height: 1.75;
+  font-weight: 400;
+  line-height: 1.8;
   font-feature-settings: 'palt';
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-/* 上部の青い光と、うっすらした方眼 */
-body::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 900px;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(60% 50% at 75% 0%, var(--glow), transparent 70%),
-    radial-gradient(40% 40% at 10% 10%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 70%),
-    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 56px 56px,
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 56px 56px;
-  mask-image: linear-gradient(to bottom, #000 30%, transparent);
 }
 
 a {
@@ -84,16 +72,11 @@ a {
   text-decoration: none;
 }
 
-::selection {
-  background: color-mix(in srgb, var(--accent) 30%, transparent);
-}
-
 h1,
 h2,
 h3 {
   margin: 0;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  color: var(--heading);
 }
 
 img {
@@ -103,108 +86,193 @@ img {
 }
 
 .container {
-  max-width: var(--max);
+  max-width: calc(var(--max) + 2 * var(--spacing-xxl));
   margin: 0 auto;
-  padding: 0 clamp(16px, 4vw, 40px);
+  padding: 0 clamp(var(--spacing-gutter), 4vw, var(--spacing-xxl));
+}
+
+.section {
+  padding-top: var(--spacing-section-lg);
+}
+
+/* ---- 文字組み（DESIGN.md の typography に対応） ---- */
+.t-hero {
+  font-size: 64px;
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+}
+
+.t-display {
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+}
+
+.t-heading-lg {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+}
+
+.t-heading-md {
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1.36;
+}
+
+.t-heading-sm {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.33;
+}
+
+.t-subtitle-lg {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.t-subtitle-md {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.t-body-sm {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.t-caption {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* eyebrow: 見出しの上の小さなコバルトのラベル */
+.eyebrow {
+  margin: 0 0 var(--spacing-xs);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .muted {
   color: var(--muted);
 }
 
-.mono {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
+@media (max-width: 767px) {
+  .section {
+    padding-top: var(--spacing-section);
+  }
+
+  .t-hero {
+    font-size: 40px;
+  }
+
+  .t-display {
+    font-size: 32px;
+  }
+
+  .t-heading-lg {
+    font-size: 28px;
+  }
+
+  .t-heading-md {
+    font-size: 22px;
+  }
+
+  .t-heading-sm {
+    font-size: 20px;
+  }
 }
 
-.gradient-text {
-  background: linear-gradient(100deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* 本文中のリンク */
-.link {
-  color: var(--accent);
-  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
-  transition: background-size 0.25s ease;
-}
-
-.link:hover {
-  background-size: 100% 1px;
-}
-
-.arrow-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.arrow-link::after {
-  content: '→';
-  transition: transform 0.2s ease;
-}
-
-.arrow-link:hover::after {
-  transform: translateX(4px);
-}
-
+/* ---- ボタン（button-primary / button-secondary / button-ghost） ---- */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.3rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  border: 1px solid var(--line-strong);
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    border-color 0.2s ease;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  min-height: 44px;
+  padding: 12px 28px;
+  border: 2px solid var(--heading);
+  border-radius: var(--rounded-full);
+  background: transparent;
+  color: var(--heading);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.43;
+  letter-spacing: -0.01em;
+  transition: opacity 0.15s ease-out;
 }
 
-.btn:hover {
-  transform: translateY(-1px);
-  border-color: var(--accent);
+.btn:active {
+  opacity: 0.75;
 }
 
 .btn-primary {
-  background: var(--text);
-  color: var(--bg);
-  border-color: transparent;
+  padding: 14px 30px;
+  border: 0;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
 }
 
-.btn-primary:hover {
-  background: var(--accent);
-  color: var(--accent-ink);
+.btn-ghost {
+  padding: 10px 22px;
+  border-color: var(--line);
 }
 
-.section {
-  padding-top: clamp(4rem, 9vw, 7rem);
+/* link-accent */
+.link {
+  color: var(--accent);
+  font-weight: 700;
 }
 
-/* 技術スタックの表記: 等幅で「/」区切り */
-.stack {
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.link:active {
+  color: var(--accent-pressed);
+}
+
+.arrow::after {
+  content: ' →';
+}
+
+/* chip */
+.chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2rem 0;
+  gap: var(--spacing-xs);
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: var(--mono);
-  font-size: 0.74rem;
+}
+
+.chips li {
+  padding: var(--spacing-xxs) var(--spacing-md);
+  border-radius: var(--rounded-full);
+  background: var(--surface);
+  color: var(--sub);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* 箇条書き（本文中） */
+.bullets {
+  margin: 0;
+  padding-left: 1.2em;
   color: var(--muted);
 }
 
-.stack li:not(:last-child)::after {
-  content: '/';
-  margin: 0 0.55rem;
-  color: var(--faint);
+.bullets li + li {
+  margin-top: var(--spacing-xxs);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -212,7 +280,6 @@ img {
   *::before,
   *::after {
     transition: none !important;
-    animation: none !important;
     scroll-behavior: auto !important;
   }
 }

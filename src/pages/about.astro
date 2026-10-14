@@ -10,28 +10,29 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
 
 <Base title="About" description={`${profile.nameJa}の経歴とプロフィール`}>
   <div class="container">
-    <PageHeader kicker="About" title={profile.nameJa} lead={profile.tagline}>
-      <dl class="facts mono">
-        <div><dt>Name</dt><dd>{profile.nameEn}</dd></div>
-        <div><dt>Now</dt><dd>{profile.affiliation}</dd></div>
-        <div><dt>From</dt><dd>{profile.hometown}</dd></div>
-        <div><dt>Focus</dt><dd>{profile.focus}</dd></div>
+    <PageHeader eyebrow="About" title={profile.nameJa} lead={profile.tagline}>
+      <!-- stat-panel -->
+      <dl class="facts">
+        <div><dt>名前</dt><dd>{profile.nameEn}</dd></div>
+        <div><dt>所属</dt><dd>{profile.affiliation}</dd></div>
+        <div><dt>出身</dt><dd>{profile.hometown}</dd></div>
+        <div><dt>分野</dt><dd>{profile.focus}</dd></div>
       </dl>
     </PageHeader>
 
     <section class="row">
-      <h2 class="mono label"><span>01</span>Career</h2>
+      <h2 class="t-heading-md label">経歴</h2>
       <ol class="timeline">
         {
           timeline.map((c) => (
             <li>
-              <span class="mono when">
-                {c.start} — {c.end ?? 'Now'}
+              <span class="t-body-sm muted">
+                {c.start} – {c.end ?? '現在'}
               </span>
               <div>
-                <h3>{c.title}</h3>
+                <h3 class="t-subtitle-lg">{c.title}</h3>
                 {c.detail && <p class="detail">{c.detail}</p>}
-                {c.points && <ul class="points">{c.points.map((p) => <li>{p}</li>)}</ul>}
+                {c.points && <ul class="bullets t-body-sm">{c.points.map((p) => <li>{p}</li>)}</ul>}
               </div>
             </li>
           ))
@@ -40,30 +41,27 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
     </section>
 
     <section class="row">
-      <h2 class="mono label"><span>02</span>At Work</h2>
-      <div>
-        <p class="intro">業務の中で作ったツールや仕組みです。</p>
-        <div class="tiles">
-          {
-            achievements.map((a) => (
-              <article class="tile">
-                <p class="mono tech">{a.tech}</p>
-                <h3>{a.title}</h3>
-                <ul class="points">{a.points.map((p) => <li>{p}</li>)}</ul>
-              </article>
-            ))
-          }
-        </div>
+      <h2 class="t-heading-md label">業務での開発・自動化</h2>
+      <div class="tiles">
+        {
+          achievements.map((a) => (
+            <article class="card-tile">
+              <p class="eyebrow">{a.tech}</p>
+              <h3 class="t-subtitle-lg">{a.title}</h3>
+              <ul class="bullets t-body-sm">{a.points.map((p) => <li>{p}</li>)}</ul>
+            </article>
+          ))
+        }
       </div>
     </section>
 
     <section class="row">
-      <h2 class="mono label"><span>03</span>Skills</h2>
+      <h2 class="t-heading-md label">スキル</h2>
       <dl class="skills">
         {
           shownSkills.map((s) => (
             <div>
-              <dt>{s.group}</dt>
+              <dt class="t-body-sm muted">{s.group}</dt>
               <dd>
                 <ul class="chips">{s.items.map((i) => <li>{i}</li>)}</ul>
               </dd>
@@ -74,12 +72,12 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
     </section>
 
     <section class="row">
-      <h2 class="mono label"><span>04</span>Certifications</h2>
+      <h2 class="t-heading-md label">資格</h2>
       <ul class="certs">
         {
           qualifications.map((q) => (
             <li>
-              <span class="mono when">{q.date}</span>
+              <span class="t-body-sm muted">{q.date}</span>
               <span>{q.name}</span>
             </li>
           ))
@@ -88,14 +86,14 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
     </section>
 
     <section class="row">
-      <h2 class="mono label"><span>05</span>Interests</h2>
+      <h2 class="t-heading-md label">趣味・関心</h2>
       <div class="tiles">
         {
           interests.map((it) => (
-            <article class="tile">
-              <h3>{it.title}</h3>
-              <ul class="points">{it.notes.map((n) => <li>{n}</li>)}</ul>
-              {it.link && <a class="arrow-link small" href={it.link.href}>{it.link.label}</a>}
+            <article class="card-tile">
+              <h3 class="t-subtitle-lg">{it.title}</h3>
+              <ul class="bullets t-body-sm">{it.notes.map((n) => <li>{n}</li>)}</ul>
+              {it.link && <a class="link arrow t-body-sm more" href={it.link.href}>{it.link.label}</a>}
             </article>
           ))
         }
@@ -103,26 +101,24 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
     </section>
 
     <section class="row">
-      <h2 class="mono label"><span>06</span>Motto</h2>
+      <h2 class="t-heading-md label">信条</h2>
       <blockquote class="motto">
-        {profile.motto.lines.map((l) => <p>{l}</p>)}
-        <cite class="mono">— {profile.motto.author}</cite>
+        <p class="t-heading-sm">{profile.motto.lines.map((l) => <span>{l}</span>)}</p>
+        <cite class="t-body-sm muted">— {profile.motto.author}</cite>
       </blockquote>
     </section>
 
     <section class="row">
-      <h2 class="mono label"><span>07</span>Links</h2>
-      <ul class="links">
+      <h2 class="t-heading-md label">リンク</h2>
+      <div class="links">
         {
           accounts.map((a) => (
-            <li>
-              <a class="btn" href={a.href} target="_blank" rel="noopener noreferrer">
-                {a.label} ↗
-              </a>
-            </li>
+            <a class="btn btn-ghost" href={a.href} target="_blank" rel="noopener noreferrer">
+              {a.label} ↗
+            </a>
           ))
         }
-      </ul>
+      </div>
     </section>
   </div>
 </Base>
@@ -130,64 +126,40 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
 <style>
   .facts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-    gap: 1px;
-    margin: 2.5rem 0 0;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--line);
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--spacing-xs);
+    margin: var(--spacing-xxl) 0 0;
   }
 
   .facts div {
-    padding: 0.9rem 1.1rem;
-    background: var(--bg-elev);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--rounded-xxl);
+    background: var(--surface);
   }
 
   .facts dt {
-    color: var(--faint);
-    font-size: 0.7rem;
-    text-transform: uppercase;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
   }
 
   .facts dd {
-    margin: 0.2rem 0 0;
-    font-family: var(--font);
-    font-size: 0.92rem;
-    letter-spacing: 0;
+    margin: var(--spacing-xxs) 0 0;
+    color: var(--heading);
+    font-weight: 500;
   }
 
-  /* 左にラベル、右に中身の 2 カラム */
+  /* 左に見出し、右に中身 */
   .row {
     display: grid;
-    grid-template-columns: 12rem 1fr;
-    gap: 1.5rem 2.5rem;
-    padding: clamp(2.5rem, 6vw, 4rem) 0;
+    grid-template-columns: 14rem 1fr;
+    gap: var(--spacing-xl) var(--spacing-xxxl);
+    padding: var(--spacing-section) 0;
     border-top: 1px solid var(--line);
   }
 
   .label {
-    position: sticky;
-    top: 5.5rem;
     align-self: start;
-    margin: 0;
-    font-weight: 500;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .label span {
-    color: var(--accent);
-    margin-right: 0.7rem;
-  }
-
-  h3 {
-    font-size: 1.08rem;
-    font-weight: 650;
-  }
-
-  .when {
-    color: var(--muted);
   }
 
   .timeline {
@@ -198,124 +170,66 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
 
   .timeline > li {
     display: grid;
-    grid-template-columns: 11rem 1fr;
-    gap: 0.3rem 1.5rem;
-    padding: 0 0 2rem;
+    grid-template-columns: 10rem 1fr;
+    gap: var(--spacing-xxs) var(--spacing-xl);
   }
 
-  .timeline > li:last-child {
-    padding-bottom: 0;
+  .timeline > li + li {
+    margin-top: var(--spacing-xxl);
   }
 
-  .timeline > li:first-child h3 {
-    color: var(--accent);
-  }
-
-  .timeline .when {
-    padding-top: 0.25rem;
+  .timeline > li > span {
+    padding-top: 0.25em;
   }
 
   .detail {
-    margin: 0.25rem 0 0;
-    font-size: 0.95rem;
+    margin: var(--spacing-xxs) 0 0;
+    color: var(--sub);
   }
 
-  .points {
-    margin: 0.5rem 0 0;
-    padding: 0;
-    list-style: none;
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
-
-  .points li {
-    position: relative;
-    padding-left: 1.1rem;
-    margin-top: 0.3rem;
-  }
-
-  .points li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.75em;
-    width: 0.45rem;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .intro {
-    margin: 0 0 1.25rem;
-    color: var(--muted);
+  .timeline .bullets {
+    margin-top: var(--spacing-xs);
   }
 
   .tiles {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
-    gap: 1rem;
+    gap: var(--spacing-base);
   }
 
-  .tile {
-    padding: 1.25rem 1.35rem;
-    background: var(--bg-elev);
+  .card-tile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xl);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    transition: border-color 0.25s ease;
+    border-radius: var(--rounded-xl);
+    background: var(--bg);
   }
 
-  .tile:hover {
-    border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  .card-tile .eyebrow {
+    margin: 0;
   }
 
-  .tech {
-    margin: 0 0 0.4rem;
-    color: var(--accent);
-    font-size: 0.7rem;
-  }
-
-  .small {
-    display: inline-flex;
-    margin-top: 0.8rem;
-    font-size: 0.88rem;
+  .more {
+    margin-top: auto;
+    padding-top: var(--spacing-xs);
   }
 
   .skills {
     display: grid;
-    gap: 1.1rem;
+    gap: var(--spacing-base);
     margin: 0;
   }
 
   .skills div {
     display: grid;
     grid-template-columns: 7rem 1fr;
-    gap: 1rem;
-  }
-
-  .skills dt {
-    color: var(--muted);
-    font-size: 0.9rem;
-    padding-top: 0.25rem;
+    gap: var(--spacing-base);
   }
 
   .skills dd {
     margin: 0;
-  }
-
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .chips li {
-    padding: 0.25rem 0.75rem;
-    font-size: 0.84rem;
-    border: 1px solid var(--line-strong);
-    border-radius: 8px;
-    background: var(--bg-elev);
   }
 
   .certs {
@@ -326,53 +240,47 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
 
   .certs li {
     display: grid;
-    grid-template-columns: 11rem 1fr;
-    gap: 1.5rem;
-    padding: 0.35rem 0;
+    grid-template-columns: 10rem 1fr;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xxs) 0;
   }
 
   .motto {
     margin: 0;
-    font-size: clamp(1.25rem, 2.6vw, 1.7rem);
-    font-weight: 650;
-    letter-spacing: -0.02em;
-    line-height: 1.45;
   }
 
   .motto p {
     margin: 0;
+    color: var(--heading);
+  }
+
+  .motto span {
+    display: block;
   }
 
   .motto cite {
     display: block;
-    margin-top: 1rem;
+    margin-top: var(--spacing-md);
     font-style: normal;
-    color: var(--muted);
   }
 
   .links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    gap: var(--spacing-xs);
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .row {
       grid-template-columns: 1fr;
-    }
-
-    .label {
-      position: static;
+      padding: var(--spacing-section-sm) 0;
     }
 
     .timeline > li,
     .certs li,
     .skills div {
       grid-template-columns: 1fr;
-      gap: 0.2rem;
+      gap: var(--spacing-xxs);
     }
   }
 </style>

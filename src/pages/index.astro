@@ -15,46 +15,49 @@ const recent = [...career].reverse().slice(0, 4);
 <Base>
   <section class="hero container">
     <div class="intro">
-      <p class="mono kicker"><span class="dot"></span>{profile.focus}</p>
-      <h1>
-        {profile.nameJa}
-        <span class="en gradient-text">{profile.nameEn}</span>
-      </h1>
+      <p class="eyebrow">{profile.focus}</p>
+      <h1 class="t-hero">{profile.nameJa}</h1>
+      <p class="en t-heading-md">{profile.nameEn}</p>
       <p class="tagline">{profile.tagline}</p>
       <div class="cta">
-        <a class="btn btn-primary" href="/works/">Works を見る</a>
+        <a class="btn btn-primary" href="/works/">開発物を見る</a>
         <a class="btn" href="/about/">経歴・プロフィール</a>
       </div>
     </div>
-
-    <figure class="portrait">
-      <Image src={profile.photo} alt={`${profile.nameJa}の写真`} widths={[320, 640]} sizes="320px" loading="eager" />
-    </figure>
+    <!-- hero-portrait -->
+    <Image
+      class="portrait"
+      src={profile.photo}
+      alt={`${profile.nameJa}の写真`}
+      widths={[360, 720]}
+      sizes="(min-width: 1024px) 360px, 240px"
+      loading="eager"
+    />
   </section>
 
-  <section class="section container" id="works">
-    <SectionHeading index="01" sub="Selected Works" title="開発物">
-      <a class="arrow-link more" href="/works/">すべて見る</a>
+  <section class="section container">
+    <SectionHeading eyebrow="Selected Works" title="開発物">
+      <a class="link arrow" href="/works/">すべて見る</a>
     </SectionHeading>
-    {lead && <WorkCard work={lead} index={0} hero />}
+    {lead && <WorkCard work={lead} feature />}
     <div class="grid">
-      {rest.map((w, i) => <WorkCard work={w} index={i + 1} />)}
+      {rest.map((w) => <WorkCard work={w} />)}
     </div>
   </section>
 
   <section class="section container">
-    <SectionHeading index="02" sub="Experience" title="経歴">
-      <a class="arrow-link more" href="/about/">詳しく見る</a>
+    <SectionHeading eyebrow="Experience" title="経歴">
+      <a class="link arrow" href="/about/">詳しく見る</a>
     </SectionHeading>
     <ol class="exp">
       {
         recent.map((c) => (
           <li>
-            <span class="mono when">
-              {c.start} — {c.end ?? 'Now'}
+            <span class="t-body-sm muted when">
+              {c.start} – {c.end ?? '現在'}
             </span>
             <div>
-              <h3>{c.title}</h3>
+              <h3 class="t-subtitle-lg">{c.title}</h3>
               {c.detail && <p class="muted">{c.detail}</p>}
             </div>
           </li>
@@ -64,22 +67,19 @@ const recent = [...career].reverse().slice(0, 4);
   </section>
 
   <section class="section container">
-    <div class="contact">
-      <p class="mono kicker"><span class="dot"></span>Links</p>
-      <h2>Find me on</h2>
-      <ul>
+    <!-- card-promo-strip -->
+    <div class="card-promo-strip">
+      <p class="eyebrow">Links</p>
+      <h2 class="t-display">Find me on</h2>
+      <div class="accounts">
         {
           accounts.map((a) => (
-            <li>
-              <a href={a.href} target="_blank" rel="noopener noreferrer">
-                <span>{a.label}</span>
-                <span class="mono url">{a.href.replace(/^https:\/\/(www\.)?/, '')}</span>
-                <span class="go">↗</span>
-              </a>
-            </li>
+            <a class="btn" href={a.href} target="_blank" rel="noopener noreferrer">
+              {a.label} ↗
+            </a>
           ))
         }
-      </ul>
+      </div>
     </div>
   </section>
 </Base>
@@ -89,201 +89,125 @@ const recent = [...career].reverse().slice(0, 4);
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    gap: clamp(2rem, 6vw, 5rem);
-    padding-top: clamp(3.5rem, 9vw, 7rem);
-  }
-
-  .kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin: 0 0 1.5rem;
-    padding: 0.35rem 0.85rem;
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
-    color: var(--muted);
-    background: color-mix(in srgb, var(--bg-elev) 60%, transparent);
-  }
-
-  .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent-2);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-2) 22%, transparent);
-  }
-
-  h1 {
-    font-size: clamp(3rem, 9vw, 5.6rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.04em;
+    gap: var(--spacing-section);
+    padding-top: var(--spacing-hero);
   }
 
   .en {
-    display: block;
-    margin-top: 0.6rem;
-    font-size: clamp(1.4rem, 3.4vw, 2.2rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    margin: var(--spacing-xs) 0 0;
+    color: var(--muted);
   }
-
 
   .tagline {
     max-width: 36rem;
-    margin: 1.75rem 0 0;
-    color: var(--muted);
+    margin: var(--spacing-xl) 0 0;
+    color: var(--sub);
   }
 
   .cta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2rem;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xxl);
   }
 
   .portrait {
-    position: relative;
-    margin: 0;
-    width: clamp(200px, 24vw, 300px);
-  }
-
-  .portrait::before {
-    content: '';
-    position: absolute;
-    inset: -14px;
-    border-radius: 28px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    opacity: 0.35;
-    filter: blur(28px);
-    z-index: -1;
-  }
-
-  .portrait :global(img) {
-    width: 100%;
+    width: 360px;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    border-radius: 22px;
-    border: 1px solid var(--line-strong);
-  }
-
-
-  .more {
-    margin-left: auto;
-    font-size: 0.9rem;
+    border-radius: var(--rounded-xxxl);
+    background: var(--surface);
   }
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
-    gap: 1.25rem;
-    margin-top: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
   }
 
   .exp {
     margin: 0;
     padding: 0;
     list-style: none;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--line-strong);
   }
 
   .exp li {
     display: grid;
-    grid-template-columns: 13rem 1fr;
-    gap: 0.4rem 2rem;
-    padding: 1.4rem 0;
+    grid-template-columns: 12rem 1fr;
+    gap: var(--spacing-xxs) var(--spacing-xxl);
+    padding: var(--spacing-xl) 0;
     border-bottom: 1px solid var(--line);
   }
 
   .when {
-    color: var(--muted);
-    padding-top: 0.2rem;
-  }
-
-  .exp h3 {
-    font-size: 1.1rem;
-    font-weight: 650;
+    padding-top: 0.2em;
   }
 
   .exp p {
-    margin: 0.2rem 0 0;
-    font-size: 0.93rem;
+    margin: var(--spacing-xxs) 0 0;
   }
 
-  .contact {
-    padding: clamp(2rem, 5vw, 3.5rem);
-    border: 1px solid var(--line);
-    border-radius: calc(var(--radius) + 8px);
-    background:
-      radial-gradient(70% 120% at 100% 0%, var(--glow), transparent 60%),
-      var(--bg-elev);
+  .card-promo-strip {
+    padding: var(--spacing-section);
+    border-radius: var(--rounded-xxxl);
+    background: var(--color-ink-deep);
+    color: var(--color-canvas);
   }
 
-  .contact h2 {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    margin-bottom: 1.5rem;
+  .card-promo-strip h2 {
+    color: var(--color-canvas);
   }
 
-  .contact ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .card-promo-strip .eyebrow {
+    color: var(--color-primary-dark);
   }
 
-  .contact a {
-    display: grid;
-    grid-template-columns: 9rem 1fr auto;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-top: 1px solid var(--line);
-    font-size: 1.15rem;
-    font-weight: 650;
-    transition: color 0.2s ease;
+  .accounts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xxl);
   }
 
-  .contact a:hover {
-    color: var(--accent);
+  .accounts .btn {
+    border-color: var(--color-canvas);
+    color: var(--color-canvas);
   }
 
-  .url {
-    color: var(--muted);
-    font-weight: 400;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  /* ダークモードでは帯を地と区別できるよう一段明るい面にする */
+  @media (prefers-color-scheme: dark) {
+    .card-promo-strip {
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
   }
 
-  .go {
-    transition: transform 0.2s ease;
+  @media (max-width: 1023px) {
+    .portrait {
+      width: 280px;
+    }
   }
 
-  .contact a:hover .go {
-    transform: translate(3px, -3px);
-  }
-
-  @media (max-width: 760px) {
+  @media (max-width: 767px) {
     .hero {
       grid-template-columns: 1fr;
+      gap: var(--spacing-xxl);
+      padding-top: var(--spacing-section-sm);
     }
 
     .portrait {
       order: -1;
-      width: 180px;
+      width: 200px;
     }
 
     .exp li {
       grid-template-columns: 1fr;
     }
 
-    .contact a {
-      grid-template-columns: 1fr auto;
-    }
-
-    .url {
-      display: none;
+    .card-promo-strip {
+      padding: var(--spacing-xxl) var(--spacing-xl);
     }
   }
 </style>
