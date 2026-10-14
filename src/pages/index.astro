@@ -17,12 +17,9 @@ const recent = [...career].reverse().slice(0, 4);
     <div class="intro">
       <p class="mono kicker"><span class="dot"></span>{profile.focus}</p>
       <h1>
-        現場の課題を、<br />
-        <span class="gradient-text">動くもの</span>にする。
+        {profile.nameJa}
+        <span class="en gradient-text">{profile.nameEn}</span>
       </h1>
-      <p class="name">
-        {profile.nameJa}<span class="mono">{profile.nameEn}</span>
-      </p>
       <p class="tagline">{profile.tagline}</p>
       <div class="cta">
         <a class="btn btn-primary" href="/works/">Works を見る</a>
@@ -32,10 +29,6 @@ const recent = [...career].reverse().slice(0, 4);
 
     <figure class="portrait">
       <Image src={profile.photo} alt={`${profile.nameJa}の写真`} widths={[320, 640]} sizes="320px" loading="eager" />
-      <figcaption class="mono">
-        <span>Now</span>
-        {profile.affiliation}
-      </figcaption>
     </figure>
   </section>
 
@@ -121,30 +114,24 @@ const recent = [...career].reverse().slice(0, 4);
   }
 
   h1 {
-    font-size: clamp(2.5rem, 7vw, 4.9rem);
+    font-size: clamp(3rem, 9vw, 5.6rem);
     font-weight: 800;
-    line-height: 1.12;
-    letter-spacing: -0.045em;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
   }
 
-  .name {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.4rem 0.9rem;
-    margin: 1.75rem 0 0;
-    font-size: 1.15rem;
+  .en {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: clamp(1.4rem, 3.4vw, 2.2rem);
     font-weight: 700;
+    letter-spacing: -0.03em;
   }
 
-  .name .mono {
-    color: var(--muted);
-    font-weight: 500;
-  }
 
   .tagline {
     max-width: 36rem;
-    margin: 0.6rem 0 0;
+    margin: 1.75rem 0 0;
     color: var(--muted);
   }
 
@@ -180,31 +167,6 @@ const recent = [...career].reverse().slice(0, 4);
     border: 1px solid var(--line-strong);
   }
 
-  .portrait figcaption {
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    padding: 0.6rem 0.8rem;
-    border-radius: 12px;
-    font-family: var(--font);
-    font-size: 0.74rem;
-    letter-spacing: 0;
-    line-height: 1.5;
-    color: #e8eef8;
-    background: rgba(7, 11, 20, 0.62);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-  }
-
-  .portrait figcaption span {
-    display: block;
-    font-family: var(--mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #7fd8f3;
-  }
 
   .more {
     margin-left: auto;
