@@ -9,8 +9,8 @@ export type CareerItem = {
 };
 
 export const career: CareerItem[] = [
-  { start: '2012/04', end: '2015/03', title: '茨城県立下妻第一高等学校' },
-  { start: '2015/04', end: '2019/03', title: '明治大学 理工学部 応用化学科' },
+  { start: '2012/04', end: '2015/03', title: '茨城県立下妻第一高等学校', detail: '野球部に所属' },
+  { start: '2015/04', end: '2019/03', title: '明治大学 理工学部 応用化学科', detail: '理工系の硬式野球部に所属' },
   {
     start: '2019/03',
     end: '2021/01',

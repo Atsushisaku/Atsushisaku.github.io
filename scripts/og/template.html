@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <!-- SNS 共有用の画像（1200×630）の原稿。scripts/og-image.mjs が撮影して public/og.png にする -->
+    <link rel="stylesheet" href="../../node_modules/@fontsource-variable/inter/index.css" />
+    <link rel="stylesheet" href="../../node_modules/@fontsource-variable/noto-sans-jp/index.css" />
+    <link rel="stylesheet" href="../../src/styles/tokens.css" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+      }
+
+      body {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        align-items: center;
+        gap: 64px;
+        padding: 80px;
+        background: var(--color-canvas);
+        color: var(--color-ink);
+        font-family: 'Inter Variable', 'Noto Sans JP Variable', sans-serif;
+        font-feature-settings: 'palt';
+      }
+
+      .eyebrow {
+        margin: 0 0 16px;
+        color: var(--color-primary);
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 0;
+        color: var(--color-ink-deep);
+        font-size: 104px;
+        font-weight: 500;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+
+      .en {
+        margin: 12px 0 0;
+        color: var(--color-steel);
+        font-size: 40px;
+        font-weight: 300;
+      }
+
+      .url {
+        display: inline-block;
+        margin-top: 48px;
+        padding: 12px 28px;
+        border-radius: var(--rounded-full);
+        background: var(--color-ink-button);
+        color: var(--color-on-ink-button);
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      img {
+        width: 360px;
+        height: 450px;
+        object-fit: cover;
+        border-radius: var(--rounded-xxxl);
+        background: var(--color-surface-soft);
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <p class="eyebrow">Web / AI / データ分析</p>
+      <h1>桜井 惇</h1>
+      <p class="en">Sakurai Atsushi</p>
+      <span class="url">atsushisaku.github.io</span>
+    </div>
+    <img src="../../src/assets/profile.jpg" alt="" />
+  </body>
+</html>

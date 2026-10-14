@@ -28,6 +28,11 @@ DESIGN.md ──(npm run design:tokens)──▶ src/styles/tokens.css ──▶
 - Claude Code などの AI に作業させるときは、`CLAUDE.md` の指示で DESIGN.md に従うようになっている
 - `design/DESIGN-meta.md` は下敷きにした Meta のサイトの分析（参考資料）
 
+## SNS 共有用の画像
+
+X や Slack にリンクを貼ったときに出る画像は `public/og.png`。原稿は `scripts/og/template.html` で、
+名前や写真を変えたら `npm run og` で作り直す（PC の Chrome を使って撮影する）。
+
 ## 開発
 
 ```sh
