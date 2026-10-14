@@ -1,30 +1,31 @@
 ---
 import Base from '../layouts/Base.astro';
 import WorkCard from '../components/WorkCard.astro';
+import PageHeader from '../components/PageHeader.astro';
 import { works } from '../data/works';
 ---
 
 <Base title="Works" description="公開している開発物の一覧">
-  <h1>Works</h1>
-  <p class="muted lead">公開している開発物です。ソースコードは GitHub で見られます。</p>
-  <div class="grid">
-    {works.map((w) => <WorkCard work={w} />)}
+  <div class="container">
+    <PageHeader
+      kicker="Works"
+      title="開発物"
+      lead="個人で作って公開しているものです。多くはソースコードを GitHub で見られます。"
+    />
+    <div class="grid">
+      {works.map((w, i) => <WorkCard work={w} index={i} hero={i === 0} detailed />)}
+    </div>
   </div>
 </Base>
 
 <style>
-  h1 {
-    font-size: 1.8rem;
-    margin: 0 0 0.5rem;
-  }
-
-  .lead {
-    margin: 0 0 1.5rem;
-  }
-
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
+    gap: 1.25rem;
+  }
+
+  .grid > :global(.hero) {
+    grid-column: 1 / -1;
   }
 </style>

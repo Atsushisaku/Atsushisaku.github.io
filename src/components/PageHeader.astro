@@ -1,0 +1,41 @@
+---
+interface Props {
+  kicker: string;
+  title: string;
+  lead?: string;
+}
+
+const { kicker, title, lead } = Astro.props;
+---
+
+<header class="page-header">
+  <p class="mono kicker">{kicker}</p>
+  <h1>{title}</h1>
+  {lead && <p class="lead">{lead}</p>}
+  <slot />
+</header>
+
+<style>
+  .page-header {
+    padding: clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .kicker {
+    margin: 0 0 1rem;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 8vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1.05;
+  }
+
+  .lead {
+    max-width: 40rem;
+    margin: 1.25rem 0 0;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+</style>

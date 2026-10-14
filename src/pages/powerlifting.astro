@@ -1,105 +1,182 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
 import { meets, best, total, type Attempt } from '../data/powerlifting';
 
 const lifts = [
-  { key: 'squat', label: 'SQ' },
-  { key: 'bench', label: 'BP' },
-  { key: 'deadlift', label: 'DL' },
+  { key: 'squat', label: 'Squat' },
+  { key: 'bench', label: 'Bench' },
+  { key: 'deadlift', label: 'Deadlift' },
 ] as const;
 
 const fmt = (n: number) => String(n);
 const ordered = [...meets].reverse();
 const bestTotal = Math.max(...meets.map(total));
+const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m) => best(m[key])));
 ---
 
-<Base title="パワーリフティング" description="パワーリフティングの大会成績">
-  <p><a href="/about/">← About</a></p>
-  <h1>パワーリフティング 大会成績</h1>
-  <p class="muted lead">ベストトータル {fmt(bestTotal)}kg。取り消し線は失敗した試技です。</p>
+<Base title="Powerlifting" description="パワーリフティングの大会成績">
+  <div class="container">
+    <PageHeader kicker="Powerlifting" title="大会成績" lead="取り消し線は失敗した試技です。">
+      <div class="prs">
+        <div class="pr total">
+          <span class="mono">Best Total</span>
+          <strong>{fmt(bestTotal)}<small>kg</small></strong>
+        </div>
+        {
+          lifts.map(({ key, label }) => (
+            <div class="pr">
+              <span class="mono">{label}</span>
+              <strong>
+                {fmt(bestOf(key))}
+                <small>kg</small>
+              </strong>
+            </div>
+          ))
+        }
+      </div>
+    </PageHeader>
 
-  <div class="meets">
-    {
-      ordered.map((m) => (
-        <article class="meet">
-          <header>
-            <p class="meta muted">
-              {m.fiscalYear}年度 · {m.weightClass} · 体重 {fmt(m.bodyweight)}kg
-            </p>
-            <h3>{m.name}</h3>
-            <p class="result">
-              <strong>{m.place}</strong>
-              {m.awards?.map((a) => <strong>{a}</strong>)}
-              <span class="total">Total {fmt(total(m))}kg</span>
-            </p>
-          </header>
-          <table>
-            <tbody>
-              {lifts.map(({ key, label }) => (
-                <tr>
-                  <th scope="row">{label}</th>
-                  {(m[key] as Attempt[]).map(([w, good]) => (
-                    <td class={good ? 'good' : 'miss'}>{good ? fmt(w) : <s>{fmt(w)}</s>}</td>
-                  ))}
-                  <td class="best">{fmt(best(m[key]))}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </article>
-      ))
-    }
+    <div class="meets">
+      {
+        ordered.map((m) => (
+          <article class="meet">
+            <header>
+              <p class="mono meta">
+                FY{m.fiscalYear} · {m.weightClass} · BW {fmt(m.bodyweight)}kg
+              </p>
+              <h2>{m.name}</h2>
+              <p class="result">
+                <span class="badge">{m.place}</span>
+                {m.awards?.map((a) => <span class="badge">{a}</span>)}
+                <span class="mono sum">
+                  Total <strong>{fmt(total(m))}</strong>kg
+                </span>
+              </p>
+            </header>
+            <table>
+              <tbody>
+                {lifts.map(({ key, label }) => (
+                  <tr>
+                    <th scope="row" class="mono">{label}</th>
+                    {(m[key] as Attempt[]).map(([w, good]) => (
+                      <td class={good ? 'good' : 'miss'}>{good ? fmt(w) : <s>{fmt(w)}</s>}</td>
+                    ))}
+                    <td class="best">{fmt(best(m[key]))}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="assoc">
+      <a class="arrow-link" href="https://powerlifting-ibaraki.jp/" target="_blank" rel="noopener noreferrer">茨城県パワーリフティング協会</a>
+    </p>
   </div>
-
-  <p>
-    <a href="https://powerlifting-ibaraki.jp/" target="_blank" rel="noopener noreferrer">茨城県パワーリフティング協会</a>
-  </p>
 </Base>
 
 <style>
-  h1 {
-    font-size: 1.6rem;
-    margin: 0 0 0.5rem;
+  .prs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin-top: 2.5rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--line);
   }
 
-  .lead {
-    margin: 0 0 1.5rem;
+  .pr {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--bg-elev);
+  }
+
+  .pr .mono {
+    color: var(--muted);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .pr strong {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pr small {
+    font-size: 0.5em;
+    margin-left: 0.15rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .pr.total strong {
+    background: linear-gradient(100deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .meets {
     display: grid;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 30rem), 1fr));
+    gap: 1.25rem;
   }
 
   .meet {
-    padding: 1.1rem 1.25rem;
-    background: var(--surface);
+    padding: 1.4rem 1.5rem;
+    background: var(--bg-elev);
     border: 1px solid var(--line);
     border-radius: var(--radius);
   }
 
   .meta {
     margin: 0;
-    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  h2 {
+    margin-top: 0.3rem;
+    font-size: 1.05rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
   }
 
   .result {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: baseline;
-    margin: 0.3rem 0 0.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.75rem 0 1rem;
   }
 
-  .result strong {
+  .badge {
+    padding: 0.1rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
     color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
   }
 
-  .total {
+  .sum {
     margin-left: auto;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+
+  .sum strong {
+    font-family: var(--font);
+    font-size: 1.3rem;
+    color: var(--text);
+    margin: 0 0.15rem;
   }
 
   table {
@@ -111,7 +188,7 @@ const bestTotal = Math.max(...meets.map(total));
 
   th,
   td {
-    padding: 0.3rem 0.5rem;
+    padding: 0.45rem 0.4rem;
     border-top: 1px solid var(--line);
     text-align: right;
   }
@@ -119,15 +196,27 @@ const bestTotal = Math.max(...meets.map(total));
   th {
     text-align: left;
     color: var(--muted);
-    font-weight: 600;
-    width: 3rem;
+    font-weight: 500;
+    font-size: 0.72rem;
+    text-transform: uppercase;
   }
 
   .miss {
-    color: var(--muted);
+    color: var(--faint);
   }
 
   .best {
-    font-weight: 700;
+    font-weight: 750;
+    color: var(--accent);
+  }
+
+  .assoc {
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 560px) {
+    .prs {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 </style>

@@ -1,25 +1,40 @@
 :root {
-  --bg: #f6f8fb;
-  --surface: #ffffff;
-  --text: #16202e;
-  --muted: #5d6878;
-  --line: #dfe5ee;
-  --accent: #1f5fbf;
-  --accent-soft: #e4eefb;
-  --max: 46rem;
-  --radius: 10px;
+  --bg: #f5f7fb;
+  --bg-elev: #ffffff;
+  --text: #0b1324;
+  --muted: #5a667a;
+  --faint: #8a95a8;
+  --line: rgba(15, 30, 60, 0.1);
+  --line-strong: rgba(15, 30, 60, 0.18);
+  --accent: #2563eb;
+  --accent-2: #0891b2;
+  --accent-ink: #ffffff;
+  --glow: rgba(37, 99, 235, 0.16);
+  --grid: rgba(15, 30, 60, 0.05);
+  --shadow: 0 1px 2px rgba(15, 30, 60, 0.04), 0 12px 32px -12px rgba(15, 30, 60, 0.18);
+
+  --max: 72rem;
+  --radius: 16px;
+  --font: 'Inter Variable', 'Noto Sans JP Variable', system-ui, sans-serif;
+  --mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f141c;
-    --surface: #161d28;
-    --text: #e8edf4;
-    --muted: #97a3b4;
-    --line: #263142;
-    --accent: #7fb0ff;
-    --accent-soft: #1d2d47;
+    --bg: #070b14;
+    --bg-elev: #0d1424;
+    --text: #e8eef8;
+    --muted: #93a0b6;
+    --faint: #64708a;
+    --line: rgba(148, 170, 210, 0.12);
+    --line-strong: rgba(148, 170, 210, 0.24);
+    --accent: #5b9dff;
+    --accent-2: #38d1f0;
+    --accent-ink: #061024;
+    --glow: rgba(70, 130, 255, 0.22);
+    --grid: rgba(148, 170, 210, 0.05);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 20px 40px -20px rgba(0, 0, 0, 0.7);
     color-scheme: dark;
   }
 }
@@ -32,47 +47,57 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
+  position: relative;
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
+  font-family: var(--font);
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.75;
   font-feature-settings: 'palt';
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* 上部の青い光と、うっすらした方眼 */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 900px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 75% 0%, var(--glow), transparent 70%),
+    radial-gradient(40% 40% at 10% 10%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 70%),
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 56px 56px;
+  mask-image: linear-gradient(to bottom, #000 30%, transparent);
 }
 
 a {
-  color: var(--accent);
-  text-underline-offset: 3px;
+  color: inherit;
+  text-decoration: none;
 }
 
-a:hover {
-  text-decoration-thickness: 2px;
+::selection {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 h1,
 h2,
 h3 {
-  line-height: 1.35;
-  letter-spacing: 0.01em;
-}
-
-h2 {
-  font-size: 1.25rem;
-  margin: 3rem 0 1rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--line);
-}
-
-h3 {
-  font-size: 1.05rem;
   margin: 0;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 img {
+  display: block;
   max-width: 100%;
   height: auto;
 }
@@ -80,26 +105,114 @@ img {
 .container {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 clamp(16px, 4vw, 40px);
 }
 
 .muted {
   color: var(--muted);
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+.mono {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
 }
 
-.tags li {
-  font-size: 0.78rem;
-  padding: 0.1rem 0.6rem;
+.gradient-text {
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 本文中のリンク */
+.link {
+  color: var(--accent);
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.25s ease;
+}
+
+.link:hover {
+  background-size: 100% 1px;
+}
+
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.arrow-link::after {
+  content: '→';
+  transition: transform 0.2s ease;
+}
+
+.arrow-link:hover::after {
+  transform: translateX(4px);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.3rem;
   border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--line-strong);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+  border-color: transparent;
+}
+
+.btn-primary:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.section {
+  padding-top: clamp(4rem, 9vw, 7rem);
+}
+
+/* 技術スタックの表記: 等幅で「/」区切り */
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.stack li:not(:last-child)::after {
+  content: '/';
+  margin: 0 0.55rem;
+  color: var(--faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,4 +1,5 @@
 // サイト全体で使う基本情報。ページの文言はここを書き換えれば反映される。
+import photo from '../assets/profile.jpg';
 
 export const profile = {
   nameJa: '桜井 惇',
@@ -14,7 +15,7 @@ export const profile = {
     lines: ['Live as if you were to die tomorrow.', 'Learn as if you were to live forever.'],
     author: 'Mahatma Gandhi',
   },
-  photo: '/images/profile_photo.jpg',
+  photo,
 };
 
 export type Link = { label: string; href: string };

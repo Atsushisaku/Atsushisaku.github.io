@@ -1,113 +1,327 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import WorkCard from '../components/WorkCard.astro';
-import { profile } from '../data/profile';
+import SectionHeading from '../components/SectionHeading.astro';
+import { profile, accounts } from '../data/profile';
+import { career } from '../data/career';
 import { works } from '../data/works';
 
 const featured = works.filter((w) => w.featured);
+const [lead, ...rest] = featured;
+const recent = [...career].reverse().slice(0, 4);
 ---
 
 <Base>
-  <section class="hero">
-    <img class="photo" src={profile.photo} alt={`${profile.nameJa}の写真`} width="160" height="160" />
-    <div>
-      <p class="eyebrow">{profile.focus}</p>
+  <section class="hero container">
+    <div class="intro">
+      <p class="mono kicker"><span class="dot"></span>{profile.focus}</p>
       <h1>
-        {profile.nameJa}
-        <span class="en">{profile.nameEn}</span>
+        現場の課題を、<br />
+        <span class="gradient-text">動くもの</span>にする。
       </h1>
-      <p class="tagline">{profile.tagline}</p>
-      <p class="muted now">現在: {profile.affiliation}</p>
-      <p class="cta">
-        <a href="/about/">経歴・プロフィール →</a>
-        <a href="/works/">開発物 →</a>
+      <p class="name">
+        {profile.nameJa}<span class="mono">{profile.nameEn}</span>
       </p>
+      <p class="tagline">{profile.tagline}</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="/works/">Works を見る</a>
+        <a class="btn" href="/about/">経歴・プロフィール</a>
+      </div>
+    </div>
+
+    <figure class="portrait">
+      <Image src={profile.photo} alt={`${profile.nameJa}の写真`} widths={[320, 640]} sizes="320px" loading="eager" />
+      <figcaption class="mono">
+        <span>Now</span>
+        {profile.affiliation}
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="section container" id="works">
+    <SectionHeading index="01" sub="Selected Works" title="開発物">
+      <a class="arrow-link more" href="/works/">すべて見る</a>
+    </SectionHeading>
+    {lead && <WorkCard work={lead} index={0} hero />}
+    <div class="grid">
+      {rest.map((w, i) => <WorkCard work={w} index={i + 1} />)}
     </div>
   </section>
 
-  <h2>主な開発物</h2>
-  <div class="grid">
-    {featured.map((w, i) => <WorkCard work={w} wide={i === 0} />)}
-  </div>
-  <p><a href="/works/">すべての開発物を見る →</a></p>
+  <section class="section container">
+    <SectionHeading index="02" sub="Experience" title="経歴">
+      <a class="arrow-link more" href="/about/">詳しく見る</a>
+    </SectionHeading>
+    <ol class="exp">
+      {
+        recent.map((c) => (
+          <li>
+            <span class="mono when">
+              {c.start} — {c.end ?? 'Now'}
+            </span>
+            <div>
+              <h3>{c.title}</h3>
+              {c.detail && <p class="muted">{c.detail}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="section container">
+    <div class="contact">
+      <p class="mono kicker"><span class="dot"></span>Links</p>
+      <h2>Find me on</h2>
+      <ul>
+        {
+          accounts.map((a) => (
+            <li>
+              <a href={a.href} target="_blank" rel="noopener noreferrer">
+                <span>{a.label}</span>
+                <span class="mono url">{a.href.replace(/^https:\/\/(www\.)?/, '')}</span>
+                <span class="go">↗</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
 </Base>
 
 <style>
   .hero {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    padding: 1rem 0 1.5rem;
+    gap: clamp(2rem, 6vw, 5rem);
+    padding-top: clamp(3.5rem, 9vw, 7rem);
   }
 
-  .photo {
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1.5rem;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--muted);
+    background: color-mix(in srgb, var(--bg-elev) 60%, transparent);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    border: 1px solid var(--line);
-  }
-
-  .eyebrow {
-    margin: 0;
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
+    background: var(--accent-2);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-2) 22%, transparent);
   }
 
   h1 {
-    margin: 0.2rem 0 0.6rem;
-    font-size: 2rem;
+    font-size: clamp(2.5rem, 7vw, 4.9rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.045em;
   }
 
-  .en {
-    display: block;
-    font-size: 1rem;
-    font-weight: 500;
+  .name {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    margin: 1.75rem 0 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .name .mono {
     color: var(--muted);
-    letter-spacing: 0.04em;
+    font-weight: 500;
   }
 
   .tagline {
-    margin: 0;
-  }
-
-  .now {
-    margin: 0.4rem 0 0;
-    font-size: 0.9rem;
+    max-width: 36rem;
+    margin: 0.6rem 0 0;
+    color: var(--muted);
   }
 
   .cta {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.25rem;
-    margin: 1rem 0 0;
-    font-weight: 600;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .portrait {
+    position: relative;
+    margin: 0;
+    width: clamp(200px, 24vw, 300px);
+  }
+
+  .portrait::before {
+    content: '';
+    position: absolute;
+    inset: -14px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    opacity: 0.35;
+    filter: blur(28px);
+    z-index: -1;
+  }
+
+  .portrait :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 22px;
+    border: 1px solid var(--line-strong);
+  }
+
+  .portrait figcaption {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    font-family: var(--font);
+    font-size: 0.74rem;
+    letter-spacing: 0;
+    line-height: 1.5;
+    color: #e8eef8;
+    background: rgba(7, 11, 20, 0.62);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .portrait figcaption span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7fd8f3;
+  }
+
+  .more {
+    margin-left: auto;
+    font-size: 0.9rem;
   }
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
   }
 
-  @media (max-width: 560px) {
+  .exp {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .exp li {
+    display: grid;
+    grid-template-columns: 13rem 1fr;
+    gap: 0.4rem 2rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .when {
+    color: var(--muted);
+    padding-top: 0.2rem;
+  }
+
+  .exp h3 {
+    font-size: 1.1rem;
+    font-weight: 650;
+  }
+
+  .exp p {
+    margin: 0.2rem 0 0;
+    font-size: 0.93rem;
+  }
+
+  .contact {
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius) + 8px);
+    background:
+      radial-gradient(70% 120% at 100% 0%, var(--glow), transparent 60%),
+      var(--bg-elev);
+  }
+
+  .contact h2 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact a {
+    display: grid;
+    grid-template-columns: 9rem 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+    font-size: 1.15rem;
+    font-weight: 650;
+    transition: color 0.2s ease;
+  }
+
+  .contact a:hover {
+    color: var(--accent);
+  }
+
+  .url {
+    color: var(--muted);
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .go {
+    transition: transform 0.2s ease;
+  }
+
+  .contact a:hover .go {
+    transform: translate(3px, -3px);
+  }
+
+  @media (max-width: 760px) {
     .hero {
       grid-template-columns: 1fr;
-      gap: 1.25rem;
-      text-align: center;
-      justify-items: center;
     }
 
-    .photo {
-      width: 128px;
-      height: 128px;
+    .portrait {
+      order: -1;
+      width: 180px;
     }
 
-    .cta {
-      justify-content: center;
+    .exp li {
+      grid-template-columns: 1fr;
+    }
+
+    .contact a {
+      grid-template-columns: 1fr auto;
+    }
+
+    .url {
+      display: none;
     }
   }
 </style>
