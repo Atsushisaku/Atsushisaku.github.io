@@ -9,13 +9,13 @@ export type CareerItem = {
 };
 
 export const career: CareerItem[] = [
-  { start: '2012/04', end: '2015/03', title: '茨城県立下妻第一高等学校', detail: '野球部に所属' },
-  { start: '2015/04', end: '2019/03', title: '明治大学 理工学部 応用化学科', detail: '理工系の硬式野球部に所属' },
+  { start: '2012/04', end: '2015/03', title: '茨城県立下妻第一高等学校', detail: '野球部所属' },
+  { start: '2015/04', end: '2019/03', title: '明治大学 理工学部 応用化学科', detail: '理工系硬式野球部所属' },
   {
     start: '2019/03',
     end: '2021/01',
     title: 'ポーカープレイヤー',
-    detail: 'ソウル・マニラ・ラスベガスを拠点に、キャッシュゲーム（NLHE）を中心に活動',
+    detail: 'ソウル・マニラ・ラスベガスを拠点に、NLHEキャッシュゲームを中心に活動',
   },
   {
     start: '2021/01',
@@ -33,7 +33,7 @@ export const career: CareerItem[] = [
     title: '産業技術総合研究所 人工知能センター',
     detail: '機械学習・最適化・マルチエージェントシミュレーションの社会実装に関する研究',
     points: [
-      'LiDAR で取得した人流データの処理・集計・分析。結果は実際の施設の入退場に関する会議でも使われた',
+      'LiDAR で取得した人流データの処理・集計・分析',
       'Omniverse 上で人流データを再現し、人とロボット・車両の相互作用シミュレーションの基盤を整備',
     ],
   },
@@ -42,7 +42,7 @@ export const career: CareerItem[] = [
     title: '産業技術総合研究所 材料基盤研究部門',
     detail: 'ロボットとデータ技術を使った、材料研究の実験プロセスの高度化',
     points: [
-      'アーム型ロボットによる化学実験（サンプル搬送・乳鉢での合成）の自動化',
+      'アーム型ロボットによる化学実験の自動化',
       '自動化した実験の記録を、ローカル LLM で MaiML 形式に標準化する仕組みを実証中',
     ],
   },
@@ -58,12 +58,12 @@ export const achievements: { title: string; tech: string; points: string[] }[] =
   {
     title: '薬品棚卸アプリ',
     tech: 'Python',
-    points: ['電子天秤とバーコードリーダーを PC につないだ棚卸アプリを自作', '20 品目程度の棚卸が約 30 分から 15 分弱に'],
+    points: ['電子天秤とバーコードリーダーを PC につないだ棚卸アプリを自作'],
   },
   {
     title: '分析データ処理の自動化',
     tech: 'Excel VBA',
-    points: ['ピーク検出と複数ファイル（CSV・テキスト）の処理を自動化', '合成物ごとの作業が約 5 分から 1 分以内に。現場で継続して使われている'],
+    points: ['ピーク検出と複数ファイル（CSV・テキスト）の処理を自動化'],
   },
   {
     title: '購入申請フローの内製化',
@@ -95,7 +95,7 @@ export type Interest = { title: string; notes: string[]; link?: { label: string;
 
 export const interests: Interest[] = [
   {
-    title: 'ウエイトトレーニング・パワーリフティング',
+    title: '筋トレ・パワーリフティング',
     notes: ['高校時代に野球の技術向上のためにトレーニングを開始', 'パワーリフティングの大会に出場'],
     link: { label: '大会成績', href: '/powerlifting/' },
   },
@@ -114,8 +114,8 @@ export const interests: Interest[] = [
   {
     title: 'スポーツ',
     notes: [
-      'スポーツ全般が好き（採点競技はあまり好きではない）',
-      '野球: 中学・高校で野球部、大学では理工系の硬式野球部に所属。MLB 観戦',
+      'スポーツ全般が好き',
+      'MLB 観戦',
       'ボクシング観戦',
     ],
   },
