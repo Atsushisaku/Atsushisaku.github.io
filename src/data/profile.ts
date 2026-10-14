@@ -3,10 +3,13 @@
 export const profile = {
   nameJa: '桜井 惇',
   nameEn: 'Sakurai Atsushi',
-  role: 'データサイエンティスト',
+  // トップの名前の上に出す短いラベル（肩書きではなく、取り組んでいる分野）
+  focus: 'Web / AI / データ分析',
+  affiliation: '産業技術総合研究所 材料基盤研究部門',
   hometown: '茨城県',
   // トップページの一言紹介
-  tagline: '材料研究からデータサイエンスへ。研究の傍ら、Web アプリや分析ツールを作っています。',
+  tagline:
+    '研究の現場で見つけた課題を、自分で実装して解決してきました。Python によるデータ分析・業務自動化から、TypeScript / Next.js の Web アプリ、ローカル LLM を使ったツールまで作っています。',
   motto: {
     lines: ['Live as if you were to die tomorrow.', 'Learn as if you were to live forever.'],
     author: 'Mahatma Gandhi',

@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { profile, accounts } from '../data/profile';
-import { career, skills, interests } from '../data/career';
+import { career, achievements, skills, qualifications, interests } from '../data/career';
 
 const timeline = [...career].reverse();
 ---
@@ -12,8 +12,8 @@ const timeline = [...career].reverse();
   <dl class="facts">
     <dt>名前</dt>
     <dd>{profile.nameJa}（{profile.nameEn}）</dd>
-    <dt>職業</dt>
-    <dd>{profile.role}</dd>
+    <dt>所属</dt>
+    <dd>{profile.affiliation}</dd>
     <dt>出身</dt>
     <dd>{profile.hometown}</dd>
   </dl>
@@ -32,11 +32,25 @@ const timeline = [...career].reverse();
             {c.start} – {c.end ?? '現在'}
           </span>
           <span class="title">{c.title}</span>
-          {c.detail && <p class="muted detail">{c.detail}</p>}
+          {c.detail && <p class="detail">{c.detail}</p>}
+          {c.points && <ul class="points">{c.points.map((p) => <li>{p}</li>)}</ul>}
         </li>
       ))
     }
   </ol>
+
+  <h2>業務での開発・自動化</h2>
+  <div class="cards">
+    {
+      achievements.map((a) => (
+        <section>
+          <h3>{a.title}</h3>
+          <p class="tech">{a.tech}</p>
+          <ul>{a.points.map((p) => <li>{p}</li>)}</ul>
+        </section>
+      ))
+    }
+  </div>
 
   {
     skills.some((s) => s.items.length > 0) && (
@@ -58,8 +72,20 @@ const timeline = [...career].reverse();
     )
   }
 
+  <h2>資格</h2>
+  <dl class="facts">
+    {
+      qualifications.map((q) => (
+        <>
+          <dt class="num">{q.date}</dt>
+          <dd>{q.name}</dd>
+        </>
+      ))
+    }
+  </dl>
+
   <h2>趣味・関心</h2>
-  <div class="interests">
+  <div class="cards">
     {
       interests.map((it) => (
         <section>
@@ -125,12 +151,12 @@ const timeline = [...career].reverse();
     border-left: 2px solid var(--line);
   }
 
-  .timeline li {
+  .timeline > li {
     position: relative;
     padding: 0 0 1.25rem 1.25rem;
   }
 
-  .timeline li::before {
+  .timeline > li::before {
     content: '';
     position: absolute;
     left: -6px;
@@ -142,7 +168,7 @@ const timeline = [...career].reverse();
     border: 2px solid var(--accent);
   }
 
-  .timeline li:first-child::before {
+  .timeline > li:first-child::before {
     background: var(--accent);
   }
 
@@ -159,29 +185,47 @@ const timeline = [...career].reverse();
 
   .detail {
     margin: 0.2rem 0 0;
-    font-size: 0.92rem;
+    font-size: 0.93rem;
   }
 
-  .interests {
+  .points {
+    margin: 0.3rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tech {
+    margin: 0.2rem 0 0;
+    font-size: 0.82rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
     gap: 1rem;
   }
 
-  .interests section {
+  .cards section {
     padding: 1rem 1.25rem;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
   }
 
-  .interests ul {
+  .cards ul {
     margin: 0.5rem 0;
     padding-left: 1.2rem;
     font-size: 0.93rem;
   }
 
-  .interests a {
+  .cards a {
     font-size: 0.92rem;
   }
 

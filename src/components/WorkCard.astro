@@ -3,18 +3,24 @@ import type { Work } from '../data/works';
 
 interface Props {
   work: Work;
+  wide?: boolean;
 }
 
-const { work } = Astro.props;
+const { work, wide = false } = Astro.props;
 ---
 
-<article class="card">
-  <h3>{work.name}</h3>
+<article class:list={['card', { wide }]}>
+  <header>
+    <h3>{work.name}</h3>
+    {work.tagline && <p class="tagline">{work.tagline}</p>}
+  </header>
   <p>{work.summary}</p>
+  {work.points && <ul class="points">{work.points.map((p) => <li>{p}</li>)}</ul>}
   <ul class="tags">{work.tech.map((t) => <li>{t}</li>)}</ul>
   <div class="actions">
-    {work.demo && <a href={work.demo} target="_blank" rel="noopener noreferrer">デモを開く →</a>}
+    {work.demo && <a class="primary" href={work.demo} target="_blank" rel="noopener noreferrer">サイトを開く →</a>}
     {work.repo && <a href={work.repo} target="_blank" rel="noopener noreferrer">GitHub</a>}
+    {work.note && <span class="muted note">{work.note}</span>}
   </div>
 </article>
 
@@ -29,15 +35,49 @@ const { work } = Astro.props;
     border-radius: var(--radius);
   }
 
+  .wide {
+    grid-column: 1 / -1;
+    border-top: 3px solid var(--accent);
+    padding: 1.5rem;
+  }
+
+  .wide h3 {
+    font-size: 1.3rem;
+  }
+
+  .tagline {
+    margin: 0.15rem 0 0;
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
   p {
     margin: 0;
     font-size: 0.95rem;
   }
 
+  .points {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
   .actions {
     display: flex;
-    gap: 1.25rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1.25rem;
     margin-top: auto;
     font-size: 0.92rem;
+  }
+
+  .primary {
+    font-weight: 600;
+  }
+
+  .note {
+    font-size: 0.85rem;
   }
 </style>

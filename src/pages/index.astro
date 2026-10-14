@@ -2,24 +2,22 @@
 import Base from '../layouts/Base.astro';
 import WorkCard from '../components/WorkCard.astro';
 import { profile } from '../data/profile';
-import { career } from '../data/career';
 import { works } from '../data/works';
 
 const featured = works.filter((w) => w.featured);
-const now = career.at(-1);
 ---
 
 <Base>
   <section class="hero">
     <img class="photo" src={profile.photo} alt={`${profile.nameJa}の写真`} width="160" height="160" />
     <div>
-      <p class="eyebrow">{profile.role}</p>
+      <p class="eyebrow">{profile.focus}</p>
       <h1>
         {profile.nameJa}
         <span class="en">{profile.nameEn}</span>
       </h1>
       <p class="tagline">{profile.tagline}</p>
-      {now && <p class="muted now">現在: {now.title}</p>}
+      <p class="muted now">現在: {profile.affiliation}</p>
       <p class="cta">
         <a href="/about/">経歴・プロフィール →</a>
         <a href="/works/">開発物 →</a>
@@ -29,7 +27,7 @@ const now = career.at(-1);
 
   <h2>主な開発物</h2>
   <div class="grid">
-    {featured.map((w) => <WorkCard work={w} />)}
+    {featured.map((w, i) => <WorkCard work={w} wide={i === 0} />)}
   </div>
   <p><a href="/works/">すべての開発物を見る →</a></p>
 </Base>
