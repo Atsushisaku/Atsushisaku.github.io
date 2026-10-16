@@ -11,7 +11,6 @@ const lifts = [
 
 const fmt = (n: number) => String(n);
 const ordered = [...meets].reverse();
-const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m) => best(m[key])));
 
 // 順位・賞ごとのバッジの色（DESIGN.md の badge-gold / silver / bronze / mvp）。無いものは badge-accent
 const badgeClass: Record<string, string> = {
@@ -25,22 +24,7 @@ const badge = (label: string) => `badge ${badgeClass[label] ?? 'badge-accent'}`;
 
 <Base title="パワーリフティング" description="パワーリフティングの大会成績">
   <div class="container">
-    <PageHeader eyebrow="Powerlifting" title="大会成績">
-      <!-- stat-panel -->
-      <div class="stats">
-        {
-          lifts.map(({ key, label }) => (
-            <div class="stat-panel">
-              <span class="t-caption">{label}</span>
-              <strong class="t-heading-lg">
-                {fmt(bestOf(key))}
-                <small>kg</small>
-              </strong>
-            </div>
-          ))
-        }
-      </div>
-    </PageHeader>
+    <PageHeader eyebrow="Powerlifting" title="大会成績" />
 
     <div class="meets">
       {
@@ -86,38 +70,6 @@ const badge = (label: string) => `badge ${badgeClass[label] ?? 'badge-accent'}`;
 </Base>
 
 <style>
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-xs);
-    margin-top: var(--spacing-xxl);
-  }
-
-  .stat-panel {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xxs);
-    padding: var(--spacing-xl);
-    border-radius: var(--rounded-xxl);
-    background: var(--surface);
-  }
-
-  .stat-panel span {
-    color: var(--muted);
-    font-weight: 700;
-  }
-
-  .stat-panel strong {
-    color: var(--heading);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .stat-panel small {
-    margin-left: 2px;
-    font-size: 0.5em;
-    color: var(--muted);
-  }
-
   .meets {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 30rem), 1fr));
@@ -231,18 +183,6 @@ const badge = (label: string) => `badge ${badgeClass[label] ?? 'badge-accent'}`;
   }
 
   @media (max-width: 767px) {
-    /* 3 枚を縦に積み、項目名と数値を横に並べて高さを抑える */
-    .stats {
-      grid-template-columns: 1fr;
-    }
-
-    .stat-panel {
-      flex-direction: row;
-      align-items: baseline;
-      justify-content: space-between;
-      padding: var(--spacing-base) var(--spacing-xl);
-    }
-
     .meet {
       padding: var(--spacing-xl);
     }
