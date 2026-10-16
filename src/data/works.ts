@@ -53,7 +53,7 @@ export const works: Work[] = [
   },
   {
     name: 'folder-rag-ja',
-    tagline: '社内の機密文書をチャットアプリ化',
+    tagline: '機密文書も外に出さずに検索・回答',
     summary:
       'フォルダ内の文書（md / pdf / docx）をローカルの Ollama で検索・回答\n日本語向けの RAG チャット',
     tech: ['Python', 'Streamlit', 'Ollama'],
@@ -64,7 +64,7 @@ export const works: Work[] = [
     image: allinflipImg,
     tagline: 'オールインフリップアプリ',
     summary:
-      'テキサスホールデムの「オールインフリップ」\n勝者と罰ゲームの対象などを決められる',
+      '勝者と罰ゲームの対象などを決められる',
     tech: ['TypeScript'],
     repo: 'https://github.com/Atsushisaku/AllInFlip',
     demo: 'https://all-in-flip.vercel.app',
@@ -72,7 +72,7 @@ export const works: Work[] = [
   },
   {
     name: 'Keylog',
-    tagline: '鍵管理記録をPCで',
+    tagline: '物理鍵管理記録をPCで',
     summary:
       '物理鍵の貸出と返却を記録するデスクトップの台帳アプリ\nFeliCa の IC カードで利用者を特定',
     tech: ['Python', 'SQLite', 'FeliCa'],
