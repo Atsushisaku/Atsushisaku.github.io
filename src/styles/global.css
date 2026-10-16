@@ -274,6 +274,8 @@ img {
   margin: 0;
   padding-left: 1.2em;
   color: var(--muted);
+  /* データ側の \n をそのまま改行として表示する */
+  white-space: pre-line;
 }
 
 .bullets li + li {
