@@ -32,7 +32,7 @@ const href = work.demo ?? work.repo;
   </a>
 
   <div class="body">
-    {work.tagline && <p class="eyebrow">{work.tagline}</p>}
+    {work.tagline && <p class="eyebrow eyebrow-card">{work.tagline}</p>}
     <h3 class:list={[feature ? 't-heading-lg' : 't-heading-sm']}>
       <a href={href} target="_blank" rel="noopener noreferrer">{work.name}</a>
     </h3>

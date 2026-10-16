@@ -1,4 +1,5 @@
 // サイト全体で使う基本情報。ページの文言はここを書き換えれば反映される。
+import { siGithub, siInstagram, siNote, siX, type SimpleIcon } from 'simple-icons';
 import photo from '../assets/profile.jpg';
 
 export const profile = {
@@ -17,11 +18,12 @@ export const profile = {
   photo,
 };
 
-export type Link = { label: string; href: string };
+// icon はトップの「Find me on」に出すロゴ（Simple Icons）
+export type Link = { label: string; href: string; icon: SimpleIcon };
 
 export const accounts: Link[] = [
-  { label: 'GitHub', href: 'https://github.com/Atsushisaku' },
-  { label: 'X', href: 'https://x.com/atsushi_saku' },
-  { label: 'note', href: 'https://note.com/atsushisaku' },
-  { label: 'Instagram', href: 'https://www.instagram.com/atsushisaku' },
+  { label: 'GitHub', href: 'https://github.com/Atsushisaku', icon: siGithub },
+  { label: 'X', href: 'https://x.com/atsushi_saku', icon: siX },
+  { label: 'note', href: 'https://note.com/atsushisaku', icon: siNote },
+  { label: 'Instagram', href: 'https://www.instagram.com/atsushisaku', icon: siInstagram },
 ];

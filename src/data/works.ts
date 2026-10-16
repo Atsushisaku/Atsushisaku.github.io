@@ -57,7 +57,6 @@ export const works: Work[] = [
       'フォルダ内の文書（Markdown / PDF / Word）をローカルの Ollama で検索して回答する、日本語向けの RAG チャット。',
     tech: ['Python', 'Streamlit', 'Ollama'],
     repo: 'https://github.com/Atsushisaku/folder-rag-ja',
-    featured: true,
   },
   {
     name: 'All-in Flip',

@@ -46,7 +46,7 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
         {
           achievements.map((a) => (
             <article class="card-tile">
-              <p class="eyebrow">{a.tech}</p>
+              <p class="eyebrow eyebrow-card">{a.tech}</p>
               <h3 class="t-subtitle-lg">{a.title}</h3>
               <ul class="bullets t-body-sm">{a.points.map((p) => <li>{p}</li>)}</ul>
             </article>

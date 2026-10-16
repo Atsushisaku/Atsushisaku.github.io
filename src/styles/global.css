@@ -155,9 +155,14 @@ img {
 .eyebrow {
   margin: 0 0 var(--spacing-xs);
   color: var(--accent);
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.5;
+}
+
+/* eyebrow-card: カードの中のラベルは一段小さく */
+.eyebrow-card {
+  font-size: 14px;
 }
 
 .muted {
