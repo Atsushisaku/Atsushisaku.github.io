@@ -6,10 +6,10 @@ export const profile = {
   nameEn: 'Sakurai Atsushi',
   // トップの名前の上に出す短いラベル（肩書きではなく、取り組んでいる分野）
   focus: 'Web / AI / データ分析',
-  affiliation: '産業技術総合研究所 材料基盤研究部門',
+  affiliation: '産業技術総合研究所\n材料基盤研究部門',
   hometown: '茨城県',
   // トップページの一言紹介
-  tagline: '産総研で材料研究とデータ活用に携わりながら、Web アプリやツールを個人で開発しています。',
+  tagline: '材料研究のデータ活用に携わりながら、Web アプリやツールを個人で開発',
   motto: {
     lines: ['Live as if you were to die tomorrow.', 'Learn as if you were to live forever.'],
     author: 'Mahatma Gandhi',

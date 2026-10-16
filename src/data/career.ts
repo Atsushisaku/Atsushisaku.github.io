@@ -61,17 +61,17 @@ export const achievements: { title: string; tech: string; points: string[] }[] =
   {
     title: 'ローカル LLM による実験記録の標準化',
     tech: 'Ollama',
-    points: ['同一ネットワーク上のローカル LLM を API で呼び出し、実験記録を MaiML 形式へ構造化する仕組みを実装・検証中'],
+    points: ['同一ネットワーク上のローカル LLM を API での呼び出し', '実験記録を MaiML 形式へ構造化する仕組みを実装・検証中'],
   },
   {
     title: '薬品棚卸アプリ',
     tech: 'Python',
-    points: ['電子天秤とバーコードリーダーを PC につないだ棚卸アプリを自作'],
+    points: ['電子天秤とバーコードリーダーを PC につないだ職場専用棚卸しアプリ'],
   },
   {
     title: '分析データ処理の自動化',
     tech: 'Excel VBA',
-    points: ['ピーク検出と複数ファイル（CSV・テキスト）の処理を自動化'],
+    points: ['ピーク検出と複数ファイル（csv/txt）の処理を自動化'],
   },
   {
     title: '購入申請フローの内製化',
@@ -81,7 +81,7 @@ export const achievements: { title: string; tech: string; points: string[] }[] =
   {
     title: '造粒体の圧壊強度の予測モデル',
     tech: 'Python',
-    points: ['試験条件から圧壊強度を予測するモデルを作り、吸着材の実用化の検討を支援'],
+    points: ['試験条件から圧壊強度を予測するモデル作成', '吸着材の実用化の検討を支援'],
   },
 ];
 
@@ -105,7 +105,7 @@ export type Interest = { title: string; notes: string[]; link?: { label: string;
 export const interests: Interest[] = [
   {
     title: '筋トレ・パワーリフティング',
-    notes: ['高校時代に野球の技術向上のためにトレーニングを開始', 'パワーリフティング大会に出場'],
+    notes: ['高校時代に野球の技術向上のためにトレーニングを開始', 'パワーリフティング大会出場'],
     link: { label: '大会成績', href: '/powerlifting/' },
   },
   {
@@ -120,7 +120,11 @@ export const interests: Interest[] = [
     title: 'バイブコーディング',
     notes: ['Web アプリ開発', 'トレード Bot の開発'],
   },
-    {
+  {
+    title: '英会話',
+    notes: ['海外の人との交流が好き', 'TOEICとか受けた方がいいのかもしれないが、受けていない'],
+  },
+  {
     title: '野球',
     notes: ['大学までプレー', '外野手（ライト多め）'],
   },

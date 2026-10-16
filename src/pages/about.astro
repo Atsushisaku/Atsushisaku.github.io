@@ -41,7 +41,7 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
     </section>
 
     <section class="row">
-      <h2 class="t-heading-md label">業務での開発・自動化</h2>
+      <h2 class="t-heading-md label">業務内開発</h2>
       <div class="tiles">
         {
           achievements.map((a) => (
@@ -147,6 +147,7 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
     margin: var(--spacing-xxs) 0 0;
     color: var(--heading);
     font-weight: 500;
+    white-space: pre-line;
   }
 
   /* 左に見出し、右に中身 */
