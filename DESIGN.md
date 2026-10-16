@@ -29,6 +29,15 @@ colors:
   steel-dark: "#9aa8b6"
   hairline-dark: "#33414b"
   hairline-soft-dark: "#222d34"
+  # 大会の順位バッジ（メダルの色。ライト・ダーク共通）
+  medal-gold: "#e0b43a"
+  on-medal-gold: "#2b2000"
+  medal-silver: "#c5ccd3"
+  on-medal-silver: "#1c1e21"
+  medal-bronze: "#c98b5b"
+  on-medal-bronze: "#2a1606"
+  medal-mvp: "#0a1317"
+  on-medal-mvp: "#e0b43a"
 
 typography:
   hero-display:
@@ -210,6 +219,30 @@ components:
     typography: "{typography.caption-bold}"
     rounded: "{rounded.full}"
     padding: "4px 10px"
+  badge-gold:
+    backgroundColor: "{colors.medal-gold}"
+    textColor: "{colors.on-medal-gold}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "4px 10px"
+  badge-silver:
+    backgroundColor: "{colors.medal-silver}"
+    textColor: "{colors.on-medal-silver}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "4px 10px"
+  badge-bronze:
+    backgroundColor: "{colors.medal-bronze}"
+    textColor: "{colors.on-medal-bronze}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "4px 10px"
+  badge-mvp:
+    backgroundColor: "{colors.medal-mvp}"
+    textColor: "{colors.on-medal-mvp}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "4px 10px"
   eyebrow:
     textColor: "{colors.primary}"
     typography: "{typography.caption-bold}"
@@ -280,6 +313,8 @@ Meta から変えた点は「Do's and Don'ts」の末尾にまとめる。
 - **Ink Deep / Ink / Charcoal / Steel / Stone**: 文字の 5 段階。見出しは ink-deep、本文は ink、補足は steel、さらに弱いものは stone
 - **Hairline / Hairline Soft**: 区切り線と枠線。カードの枠は 1px の hairline-soft、表や強い区切りは hairline。DESIGN.md の部品には枠線の項目が無いため、`divider` / `divider-soft` として 1px の面で定義している
 
+- **Medal (`medal-*`)**: 大会の順位バッジにだけ使う金・銀・銅と、特別賞用の黒金。コバルトとは別の系統なので、ほかの部品には使わない
+
 ダークモードは `-dark` の付いたトークンに置き換える。地は Meta の ink-deep（#0a1317）をそのまま使い、コバルトは暗い地でも読めるよう `primary-dark` に明るくする。
 
 ## Typography
@@ -324,7 +359,9 @@ Meta の Optimistic VF は入手できないため、英数字を **Inter**、�
 - **card-tile**: 業務実績・趣味などの小さな情報カード
 - **card-promo-strip**: 黒い帯のカード。トップ末尾のリンク集に使う
 - **chip**: 技術スタックやスキルの表示
-- **badge-accent**: 大会の順位など、1 つだけ目立たせたい短いラベル
+- **badge-accent**: 1 つだけ目立たせたい短いラベル（順位・賞に当てはまらないもの）
+- **badge-gold / badge-silver / badge-bronze**: 大会の優勝・準優勝・3 位。メダルの色の平らな面で、グラデーションや光沢は付けない
+- **badge-mvp**: 最優秀選手などの特別賞。黒地に金の文字と 1px の金の枠線で、順位のメダルと区別する（ダークモードで地に溶けないよう枠線を付ける）
 - **eyebrow**: 見出しの上に置く小さなコバルトのラベル
 - **stat-panel**: 自己ベストなどの大きな数値
 - **spec-table**: 大会の試技のような数値の表

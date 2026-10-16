@@ -11,8 +11,16 @@ const lifts = [
 
 const fmt = (n: number) => String(n);
 const ordered = [...meets].reverse();
-const bestTotal = Math.max(...meets.map(total));
 const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m) => best(m[key])));
+
+// 順位・賞ごとのバッジの色（DESIGN.md の badge-gold / silver / bronze / mvp）。無いものは badge-accent
+const badgeClass: Record<string, string> = {
+  優勝: 'badge-gold',
+  準優勝: 'badge-silver',
+  '3位': 'badge-bronze',
+  最優秀選手: 'badge-mvp',
+};
+const badge = (label: string) => `badge ${badgeClass[label] ?? 'badge-accent'}`;
 ---
 
 <Base title="パワーリフティング" description="パワーリフティングの大会成績">
@@ -20,10 +28,6 @@ const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m)
     <PageHeader eyebrow="Powerlifting" title="大会成績">
       <!-- stat-panel -->
       <div class="stats">
-        <div class="stat-panel">
-          <span class="t-caption">ベストトータル</span>
-          <strong class="t-heading-lg accent">{fmt(bestTotal)}<small>kg</small></strong>
-        </div>
         {
           lifts.map(({ key, label }) => (
             <div class="stat-panel">
@@ -47,14 +51,15 @@ const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m)
             </p>
             <h2 class="t-subtitle-lg">{m.name}</h2>
             <div class="result">
-              <span class="badge-accent">{m.place}</span>
-              {m.awards?.map((a) => <span class="badge-accent">{a}</span>)}
+              <span class={badge(m.place)}>{m.place}</span>
+              {m.awards?.map((a) => <span class={badge(a)}>{a}</span>)}
               <span class="sum">
                 <span class="t-body-sm muted">トータル</span>
                 <strong class="t-heading-sm">{fmt(total(m))}</strong>
                 <span class="t-body-sm muted">kg</span>
               </span>
             </div>
+            {m.comment && <p class="comment">{m.comment}</p>}
             <!-- spec-table -->
             <table class="spec-table t-body-sm">
               <tbody>
@@ -83,7 +88,7 @@ const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m)
 <style>
   .stats {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-xs);
     margin-top: var(--spacing-xxl);
   }
@@ -105,10 +110,6 @@ const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m)
   .stat-panel strong {
     color: var(--heading);
     font-variant-numeric: tabular-nums;
-  }
-
-  .stat-panel .accent {
-    color: var(--accent);
   }
 
   .stat-panel small {
@@ -141,15 +142,48 @@ const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m)
     margin: var(--spacing-md) 0 var(--spacing-lg);
   }
 
-  /* badge-accent */
-  .badge-accent {
+  .badge {
     padding: var(--spacing-xxs) 10px;
     border-radius: var(--rounded-full);
-    background: var(--accent);
-    color: var(--bg);
     font-size: 12px;
     font-weight: 700;
     line-height: 1.5;
+  }
+
+  .badge-accent {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .badge-gold {
+    background: var(--color-medal-gold);
+    color: var(--color-on-medal-gold);
+  }
+
+  .badge-silver {
+    background: var(--color-medal-silver);
+    color: var(--color-on-medal-silver);
+  }
+
+  .badge-bronze {
+    background: var(--color-medal-bronze);
+    color: var(--color-on-medal-bronze);
+  }
+
+  .badge-mvp {
+    /* 枠線のぶん余白を 1px 詰めて、ほかのバッジと高さをそろえる */
+    padding: 3px 9px;
+    border: 1px solid var(--color-on-medal-mvp);
+    background: var(--color-medal-mvp);
+    color: var(--color-on-medal-mvp);
+  }
+
+  .comment {
+    margin: 0 0 var(--spacing-lg);
+    color: var(--sub);
+    /* データ側の 
+ をそのまま改行として表示する */
+    white-space: pre-line;
   }
 
   .sum {
@@ -197,8 +231,16 @@ const bestOf = (key: (typeof lifts)[number]['key']) => Math.max(...meets.map((m)
   }
 
   @media (max-width: 767px) {
+    /* 3 枚を縦に積み、項目名と数値を横に並べて高さを抑える */
     .stats {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
+    }
+
+    .stat-panel {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: var(--spacing-base) var(--spacing-xl);
     }
 
     .meet {

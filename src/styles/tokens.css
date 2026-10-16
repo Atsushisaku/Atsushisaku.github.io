@@ -24,6 +24,14 @@
   --color-steel-dark: #9aa8b6;
   --color-hairline-dark: #33414b;
   --color-hairline-soft-dark: #222d34;
+  --color-medal-gold: #e0b43a;
+  --color-on-medal-gold: #2b2000;
+  --color-medal-silver: #c5ccd3;
+  --color-on-medal-silver: #1c1e21;
+  --color-medal-bronze: #c98b5b;
+  --color-on-medal-bronze: #2a1606;
+  --color-medal-mvp: #0a1317;
+  --color-on-medal-mvp: #e0b43a;
   --spacing-xxs: 4px;
   --spacing-xs: 8px;
   --spacing-md: 12px;
