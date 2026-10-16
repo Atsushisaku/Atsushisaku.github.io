@@ -243,6 +243,16 @@ components:
     typography: "{typography.caption-bold}"
     rounded: "{rounded.full}"
     padding: "4px 10px"
+  comment-bubble:
+    backgroundColor: "{colors.surface-soft}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.xl}"
+    padding: "{spacing.xs} {spacing.base}"
+  comment-avatar:
+    backgroundColor: "{colors.surface-soft}"
+    rounded: "{rounded.circle}"
+    size: 32px
   eyebrow:
     textColor: "{colors.primary}"
     typography: "{typography.caption-bold}"
@@ -362,6 +372,7 @@ Meta の Optimistic VF は入手できないため、英数字を **Inter**、�
 - **badge-accent**: 1 つだけ目立たせたい短いラベル（順位・賞に当てはまらないもの）
 - **badge-gold / badge-silver / badge-bronze**: 大会の優勝・準優勝・3 位。メダルの色の平らな面で、グラデーションや光沢は付けない
 - **badge-mvp**: 最優秀選手などの特別賞。黒地に金の文字と 1px の金の枠線で、順位のメダルと区別する（ダークモードで地に溶けないよう枠線を付ける）
+- **comment-avatar / comment-bubble**: 本人の一言（大会のコメントなど、くだけた言葉づかいのもの）。左に 32px の丸い本人の写真、右に surface-soft の吹き出しを置き、写真側の上の角だけ `sm`（4px）にして話し手を示す。客観的な記録（表・数値）の後ろに置き、記録と混ざらないようにする
 - **eyebrow**: 見出しの上に置く小さなコバルトのラベル
 - **stat-panel**: 自己ベストなどの大きな数値
 - **spec-table**: 大会の試技のような数値の表

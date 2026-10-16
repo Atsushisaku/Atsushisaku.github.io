@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
+import { profile } from '../data/profile';
 import { meets, best, total, type Attempt } from '../data/powerlifting';
 
 const lifts = [
@@ -43,7 +45,6 @@ const badge = (label: string) => `badge ${badgeClass[label] ?? 'badge-accent'}`;
                 <span class="t-body-sm muted">kg</span>
               </span>
             </div>
-            {m.comment && <p class="comment">{m.comment}</p>}
             <!-- spec-table -->
             <table class="spec-table t-body-sm">
               <tbody>
@@ -58,6 +59,12 @@ const badge = (label: string) => `badge ${badgeClass[label] ?? 'badge-accent'}`;
                 ))}
               </tbody>
             </table>
+            {m.comment && (
+              <figure class="comment" aria-label={`${profile.nameJa}のコメント`}>
+                <Image class="avatar" src={profile.photo} alt="" widths={[32, 64]} sizes="32px" />
+                <p class="bubble t-body-sm">{m.comment}</p>
+              </figure>
+            )}
           </article>
         ))
       }
@@ -130,11 +137,31 @@ const badge = (label: string) => `badge ${badgeClass[label] ?? 'badge-accent'}`;
     color: var(--color-on-medal-mvp);
   }
 
+  /* comment-avatar / comment-bubble: 本人の一言 */
   .comment {
-    margin: 0 0 var(--spacing-lg);
-    color: var(--sub);
-    /* データ側の 
- をそのまま改行として表示する */
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-lg) 0 0;
+  }
+
+  .avatar {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: var(--rounded-circle);
+    background: var(--surface);
+  }
+
+  .bubble {
+    margin: 0;
+    padding: var(--spacing-xs) var(--spacing-base);
+    /* 写真側の上の角だけ小さくして、話し手を示す */
+    border-radius: var(--rounded-sm) var(--rounded-xl) var(--rounded-xl) var(--rounded-xl);
+    background: var(--surface);
+    color: var(--text);
+    /* データ側の \n をそのまま改行として表示する */
     white-space: pre-line;
   }
 
