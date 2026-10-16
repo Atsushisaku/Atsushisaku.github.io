@@ -9,42 +9,50 @@ export type CareerItem = {
 };
 
 export const career: CareerItem[] = [
-  { start: '2012/04', end: '2015/03', title: '茨城県立下妻第一高等学校', detail: '野球部所属' },
-  { start: '2015/04', end: '2019/03', title: '明治大学 理工学部 応用化学科', detail: '理工系硬式野球部所属' },
+  { 
+    start: '2012/04', 
+    end: '2015/03', 
+    title: '茨城県立下妻第一高等学校', 
+    detail: '野球部所属\nウエイトトレーニングを始める' 
+  },
+  { start: '2015/04', 
+    end: '2019/03', 
+    title: '明治大学 理工学部 応用化学科', 
+    detail: '理工系硬式野球部所属\nポーカーを始める' },
   {
     start: '2019/03',
     end: '2021/01',
     title: 'ポーカープレイヤー',
-    detail: 'ソウル・マニラ・ラスベガスを拠点に、NLHEキャッシュゲームを中心に活動',
+    detail: 'NLHEライブキャッシュ中心\n主な拠点：ソウル・マニラ・ラスベガス',
   },
   {
     start: '2021/01',
     end: '2023/12',
     title: '産業技術総合研究所 ナノ材料研究部門',
     detail: 'ナノ材料を使った吸着剤・分離膜の探索と実用化の研究',
-    points: [
-      '吸着剤の探索・造粒方法の開発、酸化グラフェンの吸着性能の探索',
-      '分析データ処理の自動化（Excel VBA）、圧壊強度の予測モデル（Python）で研究を実装面から支援',
-    ],
+    // points: [
+    //   '吸着剤の探索・造粒方法の開発、酸化グラフェンの吸着性能の探索',
+    //   '分析データ処理の自動化（Excel VBA）、圧壊強度の予測モデル（Python）で研究を実装面から支援',
+    // ],
   },
   {
     start: '2024/01',
     end: '2026/03',
     title: '産業技術総合研究所 人工知能センター',
     detail: '機械学習・最適化・マルチエージェントシミュレーションの社会実装に関する研究',
-    points: [
-      'LiDAR で取得した人流データの処理・集計・分析',
-      'Omniverse 上で人流データを再現し、人とロボット・車両の相互作用シミュレーションの基盤を整備',
-    ],
+    // points: [
+    //   'LiDAR で取得した人流データの処理・集計・分析',
+    //   'Omniverse 上で人流データを再現し、人とロボット・車両の相互作用シミュレーションの基盤を整備',
+    // ],
   },
   {
     start: '2026/04',
     title: '産業技術総合研究所 材料基盤研究部門',
     detail: 'ロボットとデータ技術を使った、材料研究の実験プロセスの高度化',
-    points: [
-      'アーム型ロボットによる化学実験の自動化',
-      '自動化した実験の記録を、ローカル LLM で MaiML 形式に標準化する仕組みを実証中',
-    ],
+    // points: [
+    //   'アーム型ロボットによる化学実験の自動化',
+    //   '自動化した実験の記録を、ローカル LLM で MaiML 形式に標準化する仕組みを実証中',
+    // ],
   },
 ];
 
@@ -89,6 +97,7 @@ export const skills: { group: string; items: string[] }[] = [
 export const qualifications: { date: string; name: string }[] = [
   { date: '2025/08', name: '基本情報技術者' },
   { date: '2022/08', name: '統計検定 2 級' },
+  { date: '2015/02', name: '普通自動車第一種免許' },
 ];
 
 export type Interest = { title: string; notes: string[]; link?: { label: string; href: string } };
@@ -96,12 +105,12 @@ export type Interest = { title: string; notes: string[]; link?: { label: string;
 export const interests: Interest[] = [
   {
     title: '筋トレ・パワーリフティング',
-    notes: ['高校時代に野球の技術向上のためにトレーニングを開始', 'パワーリフティングの大会に出場'],
+    notes: ['高校時代に野球の技術向上のためにトレーニングを開始', 'パワーリフティング大会に出場'],
     link: { label: '大会成績', href: '/powerlifting/' },
   },
   {
     title: 'ポーカー',
-    notes: ['ライブキャッシュの NLHE', '約 2 年間、専業で生計を立てていた'],
+    notes: ['NLHEライブキャッシュ', '約 2 年間 専業生活'],
   },
   {
     title: '投資',
@@ -111,12 +120,17 @@ export const interests: Interest[] = [
     title: 'バイブコーディング',
     notes: ['Web アプリ開発', 'トレード Bot の開発'],
   },
+    {
+    title: '野球',
+    notes: ['大学までプレー', '外野手（ライト多め）'],
+  },
   {
-    title: 'スポーツ',
+    title: 'スポーツ観戦',
     notes: [
-      'スポーツ全般が好き',
-      'MLB 観戦',
-      'ボクシング観戦',
+      'MLB',
+      'ボクシング（タイトル戦）', 
+      '陸上（国際大会）',
+      'サッカー（ｗ杯）',  
     ],
   },
 ];
