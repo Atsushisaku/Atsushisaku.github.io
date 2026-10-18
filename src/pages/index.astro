@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import WorkCard from '../components/WorkCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import IconLinks from '../components/IconLinks.astro';
+import Milestones from '../components/Milestones.astro';
 import { profile } from '../data/profile';
 import { career } from '../data/career';
 import { works } from '../data/works';
@@ -61,6 +62,7 @@ const recent = [...career].reverse().slice(0, 4);
             <div>
               <h3 class="t-subtitle-lg">{c.title}</h3>
               {c.detail && <p class="muted">{c.detail}</p>}
+              <Milestones items={c.milestones} />
             </div>
           </li>
         ))

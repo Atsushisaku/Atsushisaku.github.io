@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import IconLinks from '../components/IconLinks.astro';
+import Milestones from '../components/Milestones.astro';
 import { profile } from '../data/profile';
 import { career, achievements, skills, qualifications, interests } from '../data/career';
 
@@ -33,6 +34,7 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
               <div>
                 <h3 class="t-subtitle-lg">{c.title}</h3>
                 {c.detail && <p class="detail">{c.detail}</p>}
+                <Milestones items={c.milestones} />
                 {c.points && <ul class="bullets t-body-sm">{c.points.map((p) => <li>{p}</li>)}</ul>}
               </div>
             </li>

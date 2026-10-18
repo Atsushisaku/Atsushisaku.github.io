@@ -253,6 +253,13 @@ components:
     backgroundColor: "{colors.surface-soft}"
     rounded: "{rounded.circle}"
     size: 32px
+  milestone:
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm-bold}"
+  milestone-dot:
+    backgroundColor: "{colors.primary}"
+    rounded: "{rounded.circle}"
+    size: 8px
   eyebrow:
     textColor: "{colors.primary}"
     typography: "{typography.body-md-bold}"
@@ -381,6 +388,7 @@ Meta の Optimistic VF は入手できないため、英数字を **Inter**、�
 - **badge-gold / badge-silver / badge-bronze**: 大会の優勝・準優勝・3 位。メダルの色の平らな面で、グラデーションや光沢は付けない
 - **badge-mvp**: 最優秀選手などの特別賞。黒地に金の文字と 1px の金の枠線で、順位のメダルと区別する（ダークモードで地に溶けないよう枠線を付ける）
 - **comment-avatar / comment-bubble**: 本人の一言（大会のコメントなど、くだけた言葉づかいのもの）。左に 32px の丸い本人の写真、右に surface-soft の吹き出しを置き、写真側の上の角だけ `sm`（4px）にして話し手を示す。客観的な記録（表・数値）の後ろに置き、記録と混ざらないようにする
+- **milestone / milestone-dot**: 経歴の中の「その時期に始めたこと」（本人の行動・転機）。所属や役割の説明（属性）と分けるため、説明の下に 8px のコバルトの点と太字 14px の文で置く。属性の説明は体言止め、転機は「〜を始める」と書き分ける
 - **eyebrow**: 見出しの上に置くコバルトのラベル（16px の太字）。大きな見出しの上でも埋もれない大きさにする
 - **eyebrow-card**: カードの中のラベル（開発物の一言・業務の技術名など）。カードの小見出しより目立たないよう 14px にする
 - **icon-button**: SNS などへのアイコンだけのリンク。56px の丸に 2px の枠線、中に 24px の単色のロゴ（Simple Icons の SVG をビルド時に埋め込む）。文字を出さない代わりに `aria-label` と `title` にサービス名を入れる。ブランド色は使わず、置き場所の文字色に合わせる

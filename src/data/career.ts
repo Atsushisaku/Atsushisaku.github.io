@@ -4,21 +4,26 @@ export type CareerItem = {
   start: string; // YYYY/MM
   end?: string;
   title: string;
-  detail?: string;
+  detail?: string; // その時の所属・役割（体言止め）
+  milestones?: string[]; // その時期に始めたこと（本人の行動・転機）。「〜を始める」
   points?: string[];
 };
 
 export const career: CareerItem[] = [
-  { 
-    start: '2012/04', 
-    end: '2015/03', 
-    title: '茨城県立下妻第一高等学校', 
-    detail: '野球部所属\nウエイトトレーニングを始める' 
+  {
+    start: '2012/04',
+    end: '2015/03',
+    title: '茨城県立下妻第一高等学校',
+    detail: '野球部所属',
+    milestones: ['ウエイトトレーニングを始める'],
   },
-  { start: '2015/04', 
-    end: '2019/03', 
-    title: '明治大学 理工学部 応用化学科', 
-    detail: '理工系硬式野球部所属\nポーカーを始める' },
+  {
+    start: '2015/04',
+    end: '2019/03',
+    title: '明治大学 理工学部 応用化学科',
+    detail: '理工系硬式野球部所属',
+    milestones: ['ポーカーを始める'],
+  },
   {
     start: '2019/03',
     end: '2021/01',
@@ -29,7 +34,8 @@ export const career: CareerItem[] = [
     start: '2021/01',
     end: '2023/12',
     title: '産業技術総合研究所 ナノ材料研究部門',
-    detail: 'ナノ材料を使った吸着剤・分離膜の探索と実用化の研究\nプログラミングを始める',
+    detail: 'ナノ材料を使った吸着剤・分離膜の探索と実用化の研究',
+    milestones: ['プログラミングを始める'],
     // points: [
     //   '吸着剤の探索・造粒方法の開発、酸化グラフェンの吸着性能の探索',
     //   '分析データ処理の自動化（Excel VBA）、圧壊強度の予測モデル（Python）で研究を実装面から支援',

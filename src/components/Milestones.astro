@@ -1,0 +1,48 @@
+---
+// milestone: 経歴の中の「その時期に始めたこと」。所属・役割の説明と分けて、コバルトの点つきで並べる
+interface Props {
+  items?: string[];
+}
+
+const { items = [] } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <ul class="milestones" aria-label="この時期に始めたこと">
+      {items.map((m) => <li>{m}</li>)}
+    </ul>
+  )
+}
+
+<style>
+  .milestones {
+    margin: var(--spacing-xs) 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.7;
+  }
+
+  .milestones li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  .milestones li + li {
+    margin-top: var(--spacing-xxs);
+  }
+
+  /* milestone-dot */
+  .milestones li::before {
+    content: '';
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--rounded-circle);
+    background: var(--accent);
+  }
+</style>
