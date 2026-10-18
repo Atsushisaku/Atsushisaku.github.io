@@ -7,7 +7,7 @@ export const profile = {
   nameEn: 'Sakurai Atsushi',
   // トップの名前の上に出す短いラベル（肩書きではなく、取り組んでいる分野）
   focus: 'Web / AI / データ分析',
-  affiliation: '産業技術総合研究所\n材料基盤研究部門',
+  affiliation: '産業技術総合研究所',
   hometown: '茨城県',
   // トップの名前の下に出すキャッチコピー（性格・ポリシー）
   catchcopy: '面白そうなら、まずやってみる',
