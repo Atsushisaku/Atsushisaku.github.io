@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { profile, accounts } from '../data/profile';
+import IconLinks from '../components/IconLinks.astro';
+import { profile } from '../data/profile';
 import { career, achievements, skills, qualifications, interests } from '../data/career';
 
 const timeline = [...career].reverse();
@@ -10,7 +11,7 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
 
 <Base title="About" description={`${profile.nameJa}の経歴とプロフィール`}>
   <div class="container">
-    <PageHeader eyebrow="About" title={profile.nameJa} lead={profile.tagline}>
+    <PageHeader eyebrow="About" title={profile.nameJa} lead={profile.description}>
       <!-- stat-panel -->
       <dl class="facts">
         <div><dt>名前</dt><dd>{profile.nameEn}</dd></div>
@@ -110,15 +111,7 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
 
     <section class="row">
       <h2 class="t-heading-md label">リンク</h2>
-      <div class="links">
-        {
-          accounts.map((a) => (
-            <a class="btn btn-ghost" href={a.href} target="_blank" rel="noopener noreferrer">
-              {a.label} ↗
-            </a>
-          ))
-        }
-      </div>
+      <IconLinks />
     </section>
   </div>
 </Base>
@@ -265,12 +258,6 @@ const shownSkills = skills.filter((s) => s.items.length > 0);
     display: block;
     margin-top: var(--spacing-md);
     font-style: normal;
-  }
-
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-xs);
   }
 
   @media (max-width: 900px) {

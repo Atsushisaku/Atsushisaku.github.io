@@ -1,0 +1,62 @@
+---
+// icon-button: SNS などへのロゴだけの丸いリンクを並べる。
+// onDark は黒い帯（card-promo-strip）の上に置くとき
+import { accounts } from '../data/profile';
+
+interface Props {
+  onDark?: boolean;
+}
+
+const { onDark = false } = Astro.props;
+---
+
+<div class:list={['icon-links', { 'on-dark': onDark }]}>
+  {
+    accounts.map((a) => (
+      <a class="icon-button" href={a.href} target="_blank" rel="noopener noreferrer" aria-label={a.label} title={a.label}>
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <path d={a.icon.path} />
+        </svg>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .icon-links {
+    /* 地の色の上では見出しの色、黒い帯の上では白で描く */
+    --icon-fg: var(--heading);
+    --icon-bg: var(--bg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+  }
+
+  .icon-links.on-dark {
+    --icon-fg: var(--color-canvas);
+    --icon-bg: var(--color-ink-deep);
+  }
+
+  .icon-button {
+    display: inline-grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--icon-fg);
+    border-radius: var(--rounded-circle);
+    color: var(--icon-fg);
+    transition:
+      background-color 0.15s,
+      color 0.15s;
+  }
+
+  .icon-button svg {
+    fill: currentColor;
+  }
+
+  .icon-button:hover,
+  .icon-button:focus-visible {
+    background: var(--icon-fg);
+    color: var(--icon-bg);
+  }
+</style>

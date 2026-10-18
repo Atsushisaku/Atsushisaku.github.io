@@ -8,7 +8,7 @@
 
 | ファイル | 内容 |
 |---|---|
-| `src/data/profile.ts` | 名前・分野・一言紹介・SNS |
+| `src/data/profile.ts` | 名前・分野・キャッチコピー・説明文・SNS |
 | `src/data/career.ts` | 経歴・業務実績・スキル・資格・趣味 |
 | `src/data/works.ts` | 開発物（`featured: true` でトップにも表示。スクリーンショットは `src/assets/works/`） |
 | `src/data/powerlifting.ts` | 大会成績 |

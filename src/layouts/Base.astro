@@ -9,7 +9,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = profile.tagline } = Astro.props;
+const { title, description = profile.description } = Astro.props;
 const siteName = `${profile.nameJa} (${profile.nameEn})`;
 const pageTitle = title ? `${title} | ${profile.nameEn}` : siteName;
 

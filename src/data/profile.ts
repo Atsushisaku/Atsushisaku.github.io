@@ -9,8 +9,10 @@ export const profile = {
   focus: 'Web / AI / データ分析',
   affiliation: '産業技術総合研究所\n材料基盤研究部門',
   hometown: '茨城県',
-  // トップページの一言紹介
-  tagline: '材料研究のデータ活用に携わりながら、Web アプリやツールを個人で開発',
+  // トップの名前の下に出すキャッチコピー（性格・ポリシー）
+  catchcopy: '面白そうなら、まずやってみる',
+  // 何をしている人かの説明文。About のリード文と、SNS 共有・検索結果の説明に使う
+  description: '材料研究のデータ活用に携わりながら、Web アプリやツールを個人で開発',
   motto: {
     lines: ['Live as if you were to die tomorrow.', 'Learn as if you were to live forever.'],
     author: 'Mahatma Gandhi',
