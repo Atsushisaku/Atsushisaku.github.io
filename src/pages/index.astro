@@ -20,7 +20,7 @@ const recent = [...career].reverse().slice(0, 4);
       <h1 class="t-hero">{profile.nameJa}</h1>
       <p class="en t-heading-md">{profile.nameEn}</p>
       <p class="tagline t-heading-sm">{profile.catchcopy}</p>
-      <p class="desc">{profile.description}</p>
+      <p class="desc t-heading-sm">{profile.description}</p>
       <div class="cta">
         <a class="btn btn-primary" href="/works/">開発物を見る</a>
         <a class="btn" href="/about/">経歴・プロフィール</a>
@@ -101,9 +101,10 @@ const recent = [...career].reverse().slice(0, 4);
   }
 
   .desc {
-    max-width: 36rem;
     margin: var(--spacing-xs) 0 0;
     color: var(--sub);
+    /* 折り返すときは文節の切れ目で（対応ブラウザのみ） */
+    word-break: auto-phrase;
   }
 
   .cta {
