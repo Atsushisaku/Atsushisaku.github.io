@@ -7,10 +7,10 @@ export const profile = {
   nameEn: 'Sakurai Atsushi',
   // トップの名前の上に出す短いラベル（肩書きではなく、取り組んでいる分野）
   focus: 'Web / AI / データ分析',
-  affiliation: '産業技術総合研究所',
+  affiliation: '三和システム株式会社',
   hometown: '茨城県',
   // トップの名前の下に出すキャッチコピー（性格・ポリシー）
-  catchcopy: '面白そうなら、まずやってみる',
+  catchcopy: '面白そうなほうへ',
   // 何をしている人かの説明文。About のリード文と、SNS 共有・検索結果の説明に使う
   description: '材料研究のデータ活用に携わりながら、Web アプリやツールを個人で開発',
   motto: {
