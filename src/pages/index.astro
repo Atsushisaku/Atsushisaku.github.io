@@ -20,7 +20,10 @@ const recent = [...career].reverse().slice(0, 4);
       <p class="eyebrow">{profile.focus}</p>
       <h1 class="t-hero">{profile.nameJa}</h1>
       <p class="en t-heading-md">{profile.nameEn}</p>
-      <p class="tagline t-heading-sm">{profile.catchcopy}</p>
+      <blockquote class="tagline">
+        <p class="t-heading-sm">{profile.motto.lines.map((l) => <span>{l}</span>)}</p>
+        <cite class="t-body-sm muted">— {profile.motto.author}</cite>
+      </blockquote>
       <p class="desc t-heading-sm">{profile.description}</p>
       <div class="cta">
         <a class="btn btn-primary" href="/works/">開発物を見る</a>
@@ -99,11 +102,26 @@ const recent = [...career].reverse().slice(0, 4);
   .tagline {
     max-width: 36rem;
     margin: var(--spacing-xl) 0 0;
+  }
+
+  .tagline p {
+    margin: 0;
     color: var(--text);
   }
 
+  .tagline span {
+    display: block;
+  }
+
+  .tagline cite {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-style: normal;
+  }
+
   .desc {
-    margin: var(--spacing-xs) 0 0;
+    /* 信条（引用）と地の文が続いて見えないよう、引用の後は間を広げる */
+    margin: var(--spacing-xl) 0 0;
     color: var(--sub);
     /* 折り返すときは文節の切れ目で（対応ブラウザのみ） */
     word-break: auto-phrase;
